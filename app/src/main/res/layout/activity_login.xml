@@ -79,16 +79,35 @@
             android:id="@+id/RegisterButton"
             android:onClick="btn_register"/>
 
-        <ImageButton
-            android:id="@+id/GoogleSignInButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/goog_icon"
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="40dp">
+
+            <ImageButton
+                android:id="@+id/GoogleSignInButton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/goog_icon"
+                />
+
+            <ImageButton
+                android:id="@+id/PhoneSignInButton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/phone_icon"
+                android:layout_marginLeft="10dp"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 

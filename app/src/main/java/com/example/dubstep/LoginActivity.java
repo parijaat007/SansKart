@@ -31,6 +31,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     ProgressDialog progressDialog;
     private ImageButton GoogleSignInButton;
+    private ImageButton PhoneSignInButton;
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 1;
 
@@ -57,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         txtpassword = (EditText) findViewById(R.id.PasswordLoginEditText);
         btn_login = (Button) findViewById(R.id.LoginButton);
         GoogleSignInButton = (ImageButton) findViewById(R.id.GoogleSignInButton);
+        PhoneSignInButton = (ImageButton) findViewById(R.id.PhoneSignInButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -71,6 +74,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 GSignIn();
+            }
+        });
+
+        PhoneSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PhoneSignIn();
             }
         });
 
@@ -181,6 +191,11 @@ public class LoginActivity extends AppCompatActivity {
     public void GSignIn(){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void PhoneSignIn() {
+        Intent intent = new Intent(LoginActivity.this, OTPSendActivity.class);
+        startActivity(intent);
     }
 
     @Override
