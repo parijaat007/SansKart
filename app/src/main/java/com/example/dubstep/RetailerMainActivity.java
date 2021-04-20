@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -33,7 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class RiderMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class RetailerMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -97,12 +96,12 @@ public class RiderMainActivity extends AppCompatActivity implements NavigationVi
             case R.id.nav_home:
                 break;
             case R.id.profile_nav:
-                Intent intent = new Intent(RiderMainActivity.this,  ProfileActivity.class);
+                Intent intent = new Intent(RetailerMainActivity.this,  ProfileActivity.class);
                 startActivity(intent);
                 break;
             case R.id.log_out:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(RiderMainActivity.this, LoginActivity.class));
+                startActivity(new Intent(RetailerMainActivity.this, LoginActivity.class));
                 finish();
         }
 
@@ -119,7 +118,7 @@ public class RiderMainActivity extends AppCompatActivity implements NavigationVi
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            Toast.makeText(RiderMainActivity.this, "LOCATION PERMISSION NOT GRANTED", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RetailerMainActivity.this, "LOCATION PERMISSION NOT GRANTED", Toast.LENGTH_SHORT).show();
             return;
         }
         fusedLocationClient.getLastLocation().addOnCompleteListener((new OnCompleteListener<Location>() {
@@ -169,7 +168,7 @@ public class RiderMainActivity extends AppCompatActivity implements NavigationVi
 //                Log.d("Rider = ", Double.toString(pos.latitude)+","+Double.toString(pos.longitude));
 //                Log.d("Distance = ", Double.toString(distance));
 //
-//                Intent intent = new Intent(RiderMainActivity.this,RiderMapsActivity.class);
+//                Intent intent = new Intent(RetailerMainActivity.this,RiderMapsActivity.class);
 //
 //                intent.putExtra("RiderLat",Double.toString(pos.latitude));
 //                intent.putExtra("RiderLong",Double.toString(pos.longitude));

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 
 
 import com.example.dubstep.Interface.ItemClickListener;
-import com.example.dubstep.Model.CartItem;
 import com.example.dubstep.Model.FoodItem;
 import com.example.dubstep.ViewHolder.FoodItemViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -34,7 +32,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -103,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 current_user = dataSnapshot.getValue(user.class);
 
-                if(current_user.Role.equals("Rider")){
-                    gotorider();
+                if(current_user.Role.equals("Retailer")){
+                    gotoretailer();
                 }
                 if(current_user.Role.equals("Customer"))
                 {
@@ -249,8 +246,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void gotorider() {
-        Intent intent = new Intent(MainActivity.this,RiderMainActivity.class);
+    private void gotoretailer() {
+        Intent intent = new Intent(MainActivity.this, RetailerMainActivity.class);
         startActivity(intent);
         finish();
     }
