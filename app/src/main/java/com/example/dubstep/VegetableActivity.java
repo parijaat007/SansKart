@@ -151,7 +151,7 @@ public class VegetableActivity extends AppCompatActivity implements NavigationVi
 
         navigationView.setCheckedItem(R.id.nav_home);
 
-        foodref = FirebaseDatabase.getInstance().getReference().child("food_menu");
+        foodref = FirebaseDatabase.getInstance().getReference().child("vegetable_menu");
         cartref = FirebaseDatabase.getInstance().getReference("Cart");
 
         recyclerView = findViewById(R.id.main_recyclerview);

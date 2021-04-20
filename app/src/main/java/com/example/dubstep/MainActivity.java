@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if(current_user.Role.equals("Customer"))
                 {
                     username = (TextView)findViewById(R.id.tv_username);
-                    username.setText("Welcome " + current_user.Username + "!");
+                    username.setText("Welcome " + "!");
 
                     userprofile = (ImageView)findViewById(R.id.iv_userimage);
                     if(firebaseAuth.getCurrentUser().getPhotoUrl() != null)

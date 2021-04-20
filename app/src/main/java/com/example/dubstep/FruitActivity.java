@@ -151,7 +151,7 @@ public class FruitActivity extends AppCompatActivity implements NavigationView.O
 
         navigationView.setCheckedItem(R.id.nav_home);
 
-        foodref = FirebaseDatabase.getInstance().getReference().child("food_menu");
+        foodref = FirebaseDatabase.getInstance().getReference().child("fruit_menu");
         cartref = FirebaseDatabase.getInstance().getReference("Cart");
 
         recyclerView = findViewById(R.id.main_recyclerview);
