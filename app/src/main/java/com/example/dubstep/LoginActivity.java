@@ -129,14 +129,20 @@ public class LoginActivity extends AppCompatActivity {
                                     FirebaseDatabase.getInstance().getReference("user")
                                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                                         @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        //public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
                                             String Role = dataSnapshot.child("Role").getValue().toString();
+//                                            if (Role.equals(null)){
+//                                                progressDialog.dismiss();
+//                                                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+//                                                finish();
+//                                            }
                                             if (Role.equals("Customer")){
                                                 progressDialog.dismiss();
                                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                                 finish();
                                             }
-                                            else if (Role.equals("Rider")) {
+                                            else if (Role.equals("Retailer")) {
                                                 progressDialog.dismiss();
                                                 startActivity(new Intent(LoginActivity.this, RetailerMainActivity.class));
                                                 finish();

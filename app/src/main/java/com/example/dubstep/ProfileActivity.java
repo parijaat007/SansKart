@@ -165,6 +165,12 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                                     mMobileNumber.setText(Phone_Number);
                                 }
                             }
+//                            if (!CustomerRole.equals(Username)) {
+//                                FirebaseDatabase.getInstance().getReference("user")
+//                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                                        .child("Username").setValue(User_Name);
+//                                mUsername.setText(User_Name);
+//                            }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {

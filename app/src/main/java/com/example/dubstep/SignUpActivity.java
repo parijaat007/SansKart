@@ -156,7 +156,7 @@ public class SignUpActivity extends AppCompatActivity {
 //                        CustomerType = "Irregular";
 //                    }
                 } else if (riderButton.isChecked()) {
-                    Role = "Rider";
+                    Role = "Retailer";
                 }
 
                 final String finalRole = Role;
