@@ -25,10 +25,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText txtFullName, txtusername, txtemail, txtpassword, txtMobileNumber;
-    RadioButton customerButton, riderButton, regularButton, irregularButton;
+    EditText txtFullName, txtusername, txtemail, txtpassword, txtpassword2, txtMobileNumber;
+    RadioButton customerButton, riderButton;
     Button SignUp;
-    RadioGroup CustomerTypeGroup;
+    //RadioGroup CustomerTypeGroup;
     private FirebaseAuth firebaseAuth;
     ProgressDialog progressDialog1;
     DatabaseReference databaseReference;
@@ -39,28 +39,29 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        txtemail = (EditText) findViewById(R.id.EmailEditText);
-        txtFullName = (EditText) findViewById(R.id.NameEditText);
-        txtusername = (EditText) findViewById(R.id.UsernameEditText);
-        txtMobileNumber = (EditText) findViewById(R.id.MobileNumberEditText);
-        txtpassword = (EditText) findViewById(R.id.PasswordEditText);
-        SignUp = (Button) findViewById(R.id.SignUpButton);
-        customerButton = (RadioButton) findViewById(R.id.CustomerButton);
-        riderButton = (RadioButton) findViewById(R.id.RiderButton);
-        regularButton = (RadioButton) findViewById(R.id.RegularButton);
-        irregularButton = (RadioButton) findViewById(R.id.IrregularButton);
-        CustomerTypeGroup = (RadioGroup) findViewById(R.id.CustomerTypeGroup);
+        txtemail = findViewById(R.id.EmailEditText);
+        txtFullName = findViewById(R.id.NameEditText);
+        txtusername = findViewById(R.id.UsernameEditText);
+        txtMobileNumber = findViewById(R.id.MobileNumberEditText);
+        txtpassword = findViewById(R.id.PasswordEditText);
+        txtpassword2 = findViewById(R.id.PasswordRetypeText);
+        SignUp = findViewById(R.id.SignUpButton);
+        customerButton = findViewById(R.id.CustomerButton);
+        riderButton =  findViewById(R.id.RiderButton);
+        //regularButton = (RadioButton) findViewById(R.id.RegularButton);
+        //irregularButton = (RadioButton) findViewById(R.id.IrregularButton);
+        //CustomerTypeGroup = (RadioGroup) findViewById(R.id.CustomerTypeGroup);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("user");
 
         firebaseAuth = FirebaseAuth.getInstance();
-        CustomerTypeGroup.setVisibility(View.INVISIBLE);
+        //CustomerTypeGroup.setVisibility(View.INVISIBLE);
 
         customerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (customerButton.isChecked()){
-                    CustomerTypeGroup.setVisibility(View.VISIBLE);
+                    //CustomerTypeGroup.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -69,7 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (riderButton.isChecked()){
-                    CustomerTypeGroup.setVisibility(View.INVISIBLE);
+                    //CustomerTypeGroup.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -89,11 +90,12 @@ public class SignUpActivity extends AppCompatActivity {
 
                 final String email = txtemail.getText().toString().trim();
                 String password = txtpassword.getText().toString().trim();
+                String password2 = txtpassword2.getText().toString().trim();
                 final String fullName = txtFullName.getText().toString();
                 final String Username = txtusername.getText().toString();
                 final String MobileNumber = txtMobileNumber.getText().toString();
                 String Role = "";
-                String CustomerType = "";
+                //String CustomerType = "";
 
                 if (TextUtils.isEmpty(fullName)) {
                     Toast.makeText(SignUpActivity.this,  "Please Enter Full Name",Toast.LENGTH_SHORT).show();
@@ -125,7 +127,16 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-
+                if (TextUtils.isEmpty(password2)) {
+                    Toast.makeText(SignUpActivity.this,  "Please Reenter Password",Toast.LENGTH_SHORT).show();
+                    progressDialog1.dismiss();
+                    return;
+                }
+                if (!txtpassword.getText().toString().equals(txtpassword2.getText().toString())) {
+                    Toast.makeText(SignUpActivity.this,  "Please Reenter The Same Password",Toast.LENGTH_SHORT).show();
+                    progressDialog1.dismiss();
+                    return;
+                }
                 if (customerButton.isChecked() == false && riderButton.isChecked() == false) {
                     Toast.makeText(SignUpActivity.this,  "Please select either Customer or Rider",Toast.LENGTH_SHORT).show();
                     progressDialog1.dismiss();
@@ -133,23 +144,24 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 if (customerButton.isChecked()) {
 
-                    if (regularButton.isChecked() == false && irregularButton.isChecked() == false) {
-                        Toast.makeText(SignUpActivity.this, "Please select either Regular or Irregular", Toast.LENGTH_SHORT).show();
-                        progressDialog1.dismiss();
-                        return;
-                    }
+//                    if (regularButton.isChecked() == false && irregularButton.isChecked() == false) {
+//                        Toast.makeText(SignUpActivity.this, "Please select either Regular or Irregular", Toast.LENGTH_SHORT).show();
+//                        progressDialog1.dismiss();
+//                        return;
+//                    }
                     Role = "Customer";
-                    if (regularButton.isChecked()){
-                        CustomerType = "Regular";
-                    } else if (irregularButton.isChecked()){
-                        CustomerType = "Irregular";
-                    }
+//                    if (regularButton.isChecked()){
+//                        CustomerType = "Regular";
+//                    } else if (irregularButton.isChecked()){
+//                        CustomerType = "Irregular";
+//                    }
                 } else if (riderButton.isChecked()) {
                     Role = "Rider";
                 }
 
                 final String finalRole = Role;
-                final String finalCustomerType = CustomerType;
+//                final String finalCustomerType = CustomerType;
+                final String finalCustomerType = "Regular";
                 firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
