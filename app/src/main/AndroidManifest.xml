@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VegetableActivity"></activity>
+        <activity android:name=".OTPVerifyActivity"></activity>
+        <activity android:name=".OTPSendActivity" />
+        <activity android:name=".VegetableActivity" />
         <activity android:name=".MealActivity" />
         <activity android:name=".FruitActivity" />
         <activity android:name=".ViewHolder.ThankYouActivity" />
