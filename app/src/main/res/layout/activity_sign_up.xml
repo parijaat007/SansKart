@@ -94,93 +94,66 @@
         android:textColorLink="#4CAF50"
         android:textSize="20sp" />
 
+    <EditText
+        android:id="@+id/PasswordRetypeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Retype Password"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:inputType="textPassword"
+        android:textAlignment="viewStart"
+        android:textColorHighlight="#FF5722"
+        android:textColorLink="#4CAF50"
+        android:textSize="20sp" />
+
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Are you a"
-            android:textColorHint="@color/white"
             android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:textSize="18sp" />
 
         <RadioButton
-            android:layout_width="wrap_content"
+            android:id="@+id/CustomerButton"
+            android:layout_width="107dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Customer"
-            android:textColorHint="@color/white"
             android:textColor="@color/white"
-            android:textSize="15sp"
-            android:id="@+id/CustomerButton"
-            />
+            android:textColorHint="@color/white"
+            android:textSize="15sp" />
 
         <RadioButton
-            android:layout_width="wrap_content"
+            android:id="@+id/RiderButton"
+            android:layout_width="98dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Rider"
-            android:textColorHint="@color/white"
+            android:text="Retailer"
             android:textColor="@color/white"
-            android:textSize="15sp"
-            android:id="@+id/RiderButton"
-            />
+            android:textColorHint="@color/white"
+            android:textSize="15sp" />
 
     </RadioGroup>
 
-    <RadioGroup
-        android:id="@+id/CustomerTypeGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:visibility="visible">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Type"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <RadioButton
-            android:id="@+id/RegularButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="45dp"
-            android:text="Regular"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-
-        <RadioButton
-            android:id="@+id/IrregularButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="26dp"
-            android:text="Irregular"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-
-
-
-    </RadioGroup>
-    
     <Button
+        android:id="@+id/SignUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:textSize="20sp"
-        android:textColor="#ffffff"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_rounded"
-        android:id="@+id/SignUpButton"/>
-
+        android:text="Sign Up"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
 
 
 </LinearLayout>
