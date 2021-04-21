@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.dubstep">
+    package="com.example.sanskart">
 
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OTPVerifyActivity"></activity>
+        <activity android:name=".AddProductActivity"></activity>
+        <activity android:name=".OTPVerifyActivity" />
         <activity android:name=".OTPSendActivity" />
         <activity android:name=".VegetableActivity" />
         <activity android:name=".MealActivity" />

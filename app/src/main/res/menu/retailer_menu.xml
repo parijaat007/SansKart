@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Categories">
+    <item android:title="Options">
         <menu>
-            <item android:id="@+id/vegetables_page" android:title="Vegetables"/>
-            <item android:id="@+id/meal_page" android:title="Meal basket"/>
-            <item android:id="@+id/fruits_page" android:title="Fruits"/>
+            <item android:id="@+id/add_prod" android:title="Add Product"/>
         </menu>
     </item>
     <item android:title="Profile">
         <menu>
-            <item android:id="@+id/nav_cart" android:title="Cart"/>
             <item android:id="@+id/profile_nav" android:title="Profile"/>
             <item android:id="@+id/log_out" android:title="Log Out"/>
         </menu>
     </item>
-    <item android:title="Options">
+    <item android:title="Go Back">
         <menu>
             <item android:id="@+id/nav_home" android:title="Home"/>
-
         </menu>
     </item>
 </menu>
