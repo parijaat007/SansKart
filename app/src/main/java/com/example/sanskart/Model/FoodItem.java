@@ -3,6 +3,7 @@ package com.example.sanskart.Model;
 public class FoodItem {
     String base_price;
     String name;
+    String imageUrl = "";
 
     public FoodItem(){
 
@@ -11,6 +12,12 @@ public class FoodItem {
     public FoodItem(String price, String name) {
         this.base_price = price;
         this.name = name;
+    }
+
+    public FoodItem(String price, String name, String url) {
+        this.base_price = price;
+        this.name = name;
+        this.imageUrl = url;
     }
 
     public String getBase_price() {
@@ -27,5 +34,13 @@ public class FoodItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

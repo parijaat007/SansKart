@@ -22,6 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sanskart.Model.OrderItem;
 import com.example.sanskart.ViewHolder.OrderItemsAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -33,6 +36,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RetailerMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    GoogleSignInClient mGoogleSignInClient;
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -65,6 +70,13 @@ public class RetailerMainActivity extends AppCompatActivity implements Navigatio
 
         firebaseAuth = FirebaseAuth.getInstance();
         orderref = FirebaseDatabase.getInstance().getReference("Orders");
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         setUpRecyclerView();
 
@@ -106,6 +118,7 @@ public class RetailerMainActivity extends AppCompatActivity implements Navigatio
                 break;
             case R.id.log_out:
                 FirebaseAuth.getInstance().signOut();
+                mGoogleSignInClient.signOut();
                 startActivity(new Intent(RetailerMainActivity.this, LoginActivity.class));
                 finish();
                 break;

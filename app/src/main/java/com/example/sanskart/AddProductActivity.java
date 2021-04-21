@@ -59,6 +59,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class AddProductActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -282,7 +283,8 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
         pd.setTitle("Uploading...");
         pd.show();
 
-        String imagepath = firebaseAuth.getCurrentUser().getUid();
+        String imagepath = UUID.randomUUID().toString();
+        uploadedimageUrl = imagepath;
 
         StorageReference picref = storageReference.child("images/" + imagepath);
 
@@ -307,8 +309,6 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
                 pd.setMessage("Percentage: " + (int)prog + "%");
             }
         });
-
-        uploadedimageUrl = picref.getDownloadUrl().toString();
     }
 
     @Override
