@@ -46,6 +46,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Button btn_logout;
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         userprofile = (ImageView) findViewById(R.id.iv_userimage);
                         if (firebaseAuth.getCurrentUser().getPhotoUrl() != null) {
-                            Picasso.get().load(firebaseAuth.getCurrentUser().getPhotoUrl()).into(userprofile);
+                            Picasso.get().load(firebaseAuth.getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(userprofile);
                         }
                     }
                 }

@@ -1,6 +1,7 @@
 package com.example.sanskart;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ButtonBarLayout;
@@ -10,8 +11,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +39,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,19 +52,29 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
 public class AddProductActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    Button addbutton;
+    Button addbutton, uploadbutton;
     EditText product_name, product_price;
     RadioButton fruitradio, vegradio, mealradio;
+    ImageView productimage;
+    String uploadedimageUrl = "";
 
     TextView username;
     ImageView userprofile;
     FirebaseAuth firebaseAuth;
+    Uri imageUri;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private DatabaseReference userref;
     private DatabaseReference fruitref;
@@ -77,6 +94,8 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
         setContentView(R.layout.activity_add_product);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -170,6 +189,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
 
                         order.put("base_price",price);
                         order.put("name",name);
+                        order.put("imgurl",uploadedimageUrl);
 
                         vegref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -187,6 +207,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
 
                         order.put("base_price",price);
                         order.put("name",name);
+                        order.put("imgurl",uploadedimageUrl);
 
                         mealref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -204,6 +225,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
 
                         order.put("base_price",price);
                         order.put("name",name);
+                        order.put("imgurl",uploadedimageUrl);
 
                         fruitref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -222,6 +244,71 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
                 }
             }
         });
+
+        // Upload Image
+
+        uploadbutton = (Button) findViewById(R.id.UploadButton);
+        productimage = (ImageView) findViewById(R.id.productimage);
+
+        uploadbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ChoosePicture();
+            }
+        });
+    }
+
+    private void ChoosePicture() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == RESULT_OK && data!=null)
+        {
+            imageUri = data.getData();
+            productimage.setImageURI(imageUri);
+            UploadImage();
+        }
+    }
+
+    private void UploadImage() {
+
+        final ProgressDialog pd = new ProgressDialog(AddProductActivity.this);
+        pd.setTitle("Uploading...");
+        pd.show();
+
+        String imagepath = firebaseAuth.getCurrentUser().getUid();
+
+        StorageReference picref = storageReference.child("images/" + imagepath);
+
+        picref.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                pd.dismiss();
+                Toast.makeText(AddProductActivity.this, "Image Uploaded!", Toast.LENGTH_SHORT).show();
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pd.dismiss();
+                Toast.makeText(AddProductActivity.this, "Image Failed to Upload!", Toast.LENGTH_SHORT).show();
+            }
+        })
+        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                double prog = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                pd.setMessage("Percentage: " + (int)prog + "%");
+            }
+        });
+
+        uploadedimageUrl = picref.getDownloadUrl().toString();
     }
 
     @Override
@@ -254,8 +341,6 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
     protected void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(mAuthStateListener);
-
-
     }
 
     @Override

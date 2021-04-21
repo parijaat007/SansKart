@@ -22,10 +22,7 @@
         <activity android:name=".MealActivity" />
         <activity android:name=".FruitActivity" />
         <activity android:name=".ViewHolder.ThankYouActivity" />
-        <activity android:name=".Order_placed" /> <!-- <activity -->
-        <!-- android:name=".RiderMapsActivity" -->
-        <!-- android:label="@string/title_activity_rider_maps" /> -->
-        <activity android:name=".ViewHolder.OtpActivity" />
+        <activity android:name=".Order_placed" />
         <activity android:name=".MapsActivity" />
         <activity android:name=".CartMainActivity" />
         <activity android:name=".ProfileActivity" />
