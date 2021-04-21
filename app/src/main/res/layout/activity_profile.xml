@@ -33,8 +33,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="60dp"
-                android:fontFamily="@font/aclonica"
-                android:text="EDIT PROFILE"
+                android:fontFamily="@font/lato_bold"
+                android:text="Edit Your Profile"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 

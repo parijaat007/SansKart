@@ -11,7 +11,7 @@
         <menu>
             <item android:id="@+id/nav_cart" android:title="Vegetables"/>
             <item android:id="@+id/profile_nav" android:title="Profile"/>
-            <item android:id="@+id/log_out" android:title="Log_Out"/>
+            <item android:id="@+id/log_out" android:title="Log Out"/>
         </menu>
     </item>
     <item android:title="Options">

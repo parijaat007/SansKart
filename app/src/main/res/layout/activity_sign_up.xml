@@ -1,159 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    android:orientation="vertical"
-    android:padding="40dp"
-    tools:context=".SignUpActivity">
+    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="REGISTER"
-        android:textAlignment="center"
-        android:textColor="#FF5722"
-        android:textSize="30sp" />
+        android:src="@drawable/gradient_background"
+        android:scaleType="fitXY"/>
 
-    <EditText
-        android:id="@+id/NameEditText"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:hint="Full Name"
-        android:inputType="textPersonName"
-        android:textAlignment="viewStart"
-        android:textColorHighlight="#FF5722"
-        android:textColorLink="#4CAF50"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/UsernameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:hint="Username"
-        android:inputType="textPersonName"
-        android:textAlignment="viewStart"
-        android:textColorHighlight="#FF5722"
-        android:textColorLink="#4CAF50"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/MobileNumberEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Mobile Number"
-        android:inputType="textPersonName"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:textAlignment="viewStart"
-        android:textColorHighlight="#FF5722"
-        android:textColorLink="#4CAF50"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/EmailEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:textAlignment="viewStart"
-        android:textColorHighlight="#FF5722"
-        android:textColorLink="#4CAF50"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/PasswordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Password"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:inputType="textPassword"
-        android:textAlignment="viewStart"
-        android:textColorHighlight="#FF5722"
-        android:textColorLink="#4CAF50"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/PasswordRetypeText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Retype Password"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:inputType="textPassword"
-        android:textAlignment="viewStart"
-        android:textColorHighlight="#FF5722"
-        android:textColorLink="#4CAF50"
-        android:textSize="20sp" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        tools:context=".SignUpActivity">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Are you a"
+            android:gravity="center"
+            android:text="Register New User"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="18sp" />
+            android:textSize="30sp"
+            android:fontFamily="@font/lato_bold"/>
 
-        <RadioButton
-            android:id="@+id/CustomerButton"
-            android:layout_width="107dp"
+        <EditText
+            android:id="@+id/NameEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Customer"
-            android:textColor="@color/white"
+            android:layout_marginTop="30dp"
+            android:ems="10"
             android:textColorHint="@color/white"
-            android:textSize="15sp" />
+            android:textColor="@color/white"
+            android:hint="Full Name"
+            android:inputType="textPersonName"
+            android:textAlignment="viewStart"
+            android:textColorHighlight="#FF5722"
+            android:textColorLink="#4CAF50"
+            android:textSize="20sp" />
 
-        <RadioButton
-            android:id="@+id/RiderButton"
-            android:layout_width="98dp"
+        <EditText
+            android:id="@+id/UsernameEditText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Retailer"
-            android:textColor="@color/white"
+            android:layout_marginTop="15dp"
+            android:ems="10"
             android:textColorHint="@color/white"
-            android:textSize="15sp" />
+            android:textColor="@color/white"
+            android:hint="Username"
+            android:inputType="textPersonName"
+            android:textAlignment="viewStart"
+            android:textColorHighlight="#FF5722"
+            android:textColorLink="#4CAF50"
+            android:textSize="20sp" />
 
-    </RadioGroup>
+        <EditText
+            android:id="@+id/MobileNumberEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Mobile Number"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textAlignment="viewStart"
+            android:textColorHighlight="#FF5722"
+            android:textColorLink="#4CAF50"
+            android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/SignUpButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_rounded"
-        android:text="Sign Up"
-        android:textColor="#ffffff"
-        android:textSize="20sp" />
+        <EditText
+            android:id="@+id/EmailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textAlignment="viewStart"
+            android:textColorHighlight="#FF5722"
+            android:textColorLink="#4CAF50"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/PasswordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Password"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:inputType="textPassword"
+            android:textAlignment="viewStart"
+            android:textColorHighlight="#FF5722"
+            android:textColorLink="#4CAF50"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/PasswordRetypeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="Retype Password"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:inputType="textPassword"
+            android:textAlignment="viewStart"
+            android:textColorHighlight="#FF5722"
+            android:textColorLink="#4CAF50"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Are you a"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/CustomerButton"
+                android:layout_width="107dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Customer"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="15sp" />
+
+            <RadioButton
+                android:id="@+id/RiderButton"
+                android:layout_width="98dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Retailer"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="15sp" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/SignUpButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_rounded"
+            android:layout_gravity="center"
+            android:text="Sign Up"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
 
 
-</LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

@@ -142,8 +142,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         order.put("CartTotalAmount",cartTotalAmt);
         order.put("Customer_UID",uid);
         order.put("Phone_Number",PhoneNumber);
-        order.put("Latitude",lat);
-        order.put("Longitude",longt);
+        order.put("Latitude",String.valueOf(lat));
+        order.put("Longitude",String.valueOf(longt));
         order.put("Status","0");
         order.put("Distance","NA");
 

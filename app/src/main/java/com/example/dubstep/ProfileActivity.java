@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -44,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
+    private RadioButton riderButton, customerButton;
 
 
     @Override
@@ -74,6 +76,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         mMobileNumber = findViewById(R.id.mMobileNumber);
         mEmail = findViewById(R.id.mEmail);
         UpdateButton = findViewById(R.id.UpdateButton);
+        riderButton = findViewById(R.id.RiderButton);
+        customerButton = findViewById(R.id.CustomerButton);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("user");
         firebaseAuth = FirebaseAuth.getInstance();
@@ -90,14 +94,30 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String Username = dataSnapshot.child("Username").getValue().toString();
-                        String FullName = dataSnapshot.child("fullName").getValue().toString();
-                        String Email = dataSnapshot.child("Email").getValue().toString();
-                        String PhoneNumber = dataSnapshot.child("PhoneNumber").getValue().toString();
-                        mUsername.setText(Username);
-                        mFullName.setText(FullName);
-                        mMobileNumber.setText(PhoneNumber);
-                        mEmail.setText(Email);
+
+                        if(dataSnapshot.exists())
+                        {
+                            String Username = dataSnapshot.child("Username").getValue().toString();
+                            String FullName = dataSnapshot.child("fullName").getValue().toString();
+                            String Email = dataSnapshot.child("Email").getValue().toString();
+                            String PhoneNumber = dataSnapshot.child("PhoneNumber").getValue().toString();
+                            mUsername.setText(Username);
+                            mFullName.setText(FullName);
+                            mMobileNumber.setText(PhoneNumber);
+                            mEmail.setText(Email);
+                        }
+                        else
+                        {
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if(user.getEmail() != null)
+                            {
+                                mEmail.setText(user.getEmail().toString());
+                            }
+                            if(user.getPhoneNumber() != null)
+                            {
+                                mMobileNumber.setText(user.getPhoneNumber().toString());
+                            }
+                        }
                     }
 
                     @Override
@@ -117,60 +137,119 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                         .addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                String Username = dataSnapshot.child("Username").getValue().toString();
-                                String FullName = dataSnapshot.child("fullName").getValue().toString();
-                                String Email = dataSnapshot.child("Email").getValue().toString();
-                                String PhoneNumber = dataSnapshot.child("PhoneNumber").getValue().toString();
 
-                                final String User_Name = mUsername.getText().toString();
-                                final String Full_Name = mFullName.getText().toString();
-                                final String E_mail = mEmail.getText().toString();
-                                final String Phone_Number = mMobileNumber.getText().toString();
+                                if (dataSnapshot.exists()) {
+                                    String Username = dataSnapshot.child("Username").getValue().toString();
+                                    String FullName = dataSnapshot.child("fullName").getValue().toString();
+                                    String Email = dataSnapshot.child("Email").getValue().toString();
+                                    String PhoneNumber = dataSnapshot.child("PhoneNumber").getValue().toString();
+                                    String CurrRole = dataSnapshot.child("Role").getValue().toString();
 
-                                if (!Full_Name.equals(FullName)) {
-                                    FirebaseDatabase.getInstance().getReference("user")
-                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                            .child("fullName").setValue(Full_Name);
-                                    mFullName.setText(Full_Name);
-                                }
-                                if (!User_Name.equals(Username)) {
-                                    FirebaseDatabase.getInstance().getReference("user")
-                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                            .child("Username").setValue(User_Name);
-                                    mUsername.setText(User_Name);
-                                }
-                                if (!E_mail.equals(Email)) {
-                                    FirebaseDatabase.getInstance().getReference("user")
-                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                            .child("Email").setValue(E_mail);
-                                    mEmail.setText(E_mail);
-                                    // [START update_email]
-                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    String role = "";
+                                    if (customerButton.isChecked())
+                                    {
+                                        role = "Customer";
+                                    }
+                                    else if(riderButton.isChecked())
+                                    {
+                                        role = "Retailer";
+                                    }
 
-                                    user.updateEmail(E_mail)
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Toast.makeText(ProfileActivity.this,  "Email Changed",Toast.LENGTH_SHORT).show();
+                                    final String User_Name = mUsername.getText().toString();
+                                    final String Full_Name = mFullName.getText().toString();
+                                    final String E_mail = mEmail.getText().toString();
+                                    final String Phone_Number = mMobileNumber.getText().toString();
+
+                                    if (!Full_Name.equals(FullName)) {
+                                        FirebaseDatabase.getInstance().getReference("user")
+                                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                .child("fullName").setValue(Full_Name);
+                                        mFullName.setText(Full_Name);
+                                    }
+                                    if (!User_Name.equals(Username)) {
+                                        FirebaseDatabase.getInstance().getReference("user")
+                                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                .child("Username").setValue(User_Name);
+                                        mUsername.setText(User_Name);
+                                    }
+                                    if (!E_mail.equals(Email)) {
+                                        FirebaseDatabase.getInstance().getReference("user")
+                                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                .child("Email").setValue(E_mail);
+                                        mEmail.setText(E_mail);
+                                        // [START update_email]
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                                        user.updateEmail(E_mail)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(ProfileActivity.this, "Email Changed", Toast.LENGTH_SHORT).show();
+                                                        }
                                                     }
-                                                }
-                                            });
-                                    // [END update_email]
+                                                });
+                                        // [END update_email]
+                                    }
+                                    if (!Phone_Number.equals(PhoneNumber)) {
+                                        FirebaseDatabase.getInstance().getReference("user")
+                                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                .child("PhoneNumber").setValue(Phone_Number);
+                                        mMobileNumber.setText(Phone_Number);
+                                    }
+
+                                    if (!role.equals(CurrRole)) {
+                                        FirebaseDatabase.getInstance().getReference("user")
+                                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                .child("Role").setValue(role);
+                                    }
                                 }
-                                if (!Phone_Number.equals(PhoneNumber)){
+                                else {
+                                    final String User_Name = mUsername.getText().toString();
+                                    final String Full_Name = mFullName.getText().toString();
+                                    final String E_mail = mEmail.getText().toString();
+                                    final String Phone_Number = mMobileNumber.getText().toString();
+                                    String role = "";
+
+                                    if (customerButton.isChecked())
+                                    {
+                                        role = "Customer";
+                                    }
+                                    else if(riderButton.isChecked())
+                                    {
+                                        role = "Retailer";
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(ProfileActivity.this, "No Role Selected", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    user details = new user(
+                                            Full_Name,
+                                            User_Name,
+                                            Phone_Number,
+                                            E_mail,
+                                            role,
+                                            ""
+                                    );
+
                                     FirebaseDatabase.getInstance().getReference("user")
                                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                            .child("PhoneNumber").setValue(Phone_Number);
-                                    mMobileNumber.setText(Phone_Number);
+                                            .setValue(details).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(ProfileActivity.this, "User Created. Please Log In again.", Toast.LENGTH_SHORT).show();
+                                            FirebaseAuth.getInstance().signOut();
+                                            mGoogleSignInClient.signOut();
+                                            startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                                            finish();
+                                        }
+                                    });
+
+
+
                                 }
                             }
-//                            if (!CustomerRole.equals(Username)) {
-//                                FirebaseDatabase.getInstance().getReference("user")
-//                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                                        .child("Username").setValue(User_Name);
-//                                mUsername.setText(User_Name);
-//                            }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {

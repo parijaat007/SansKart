@@ -93,28 +93,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
-
         userref = FirebaseDatabase.getInstance().getReference("user").child(firebaseAuth.getCurrentUser().getUid());
         userref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                current_user = dataSnapshot.getValue(user.class);
 
-                if(current_user.Role.equals("Retailer")){
-                    gotoretailer();
-                }
-                if(current_user.Role.equals("Customer"))
+                if(!dataSnapshot.exists())
                 {
-                    username = (TextView)findViewById(R.id.tv_username);
-                    username.setText("Welcome " + "!");
+                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    current_user = dataSnapshot.getValue(user.class);
 
-                    userprofile = (ImageView)findViewById(R.id.iv_userimage);
-                    if(firebaseAuth.getCurrentUser().getPhotoUrl() != null)
-                    {
-                        Picasso.get().load(firebaseAuth.getCurrentUser().getPhotoUrl()).into(userprofile);
+                    if (current_user.Role.equals("Retailer")) {
+                        gotoretailer();
                     }
 
-                    Toast.makeText(MainActivity.this, "Welcome Customer!", Toast.LENGTH_SHORT).show();
+                    if (current_user.Role.equals("Customer")) {
+                        username = (TextView) findViewById(R.id.tv_username);
+                        username.setText("Welcome " + current_user.Username + "!");
+
+                        userprofile = (ImageView) findViewById(R.id.iv_userimage);
+                        if (firebaseAuth.getCurrentUser().getPhotoUrl() != null) {
+                            Picasso.get().load(firebaseAuth.getCurrentUser().getPhotoUrl()).into(userprofile);
+                        }
+                    }
                 }
             }
 
