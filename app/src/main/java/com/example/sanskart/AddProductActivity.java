@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -186,11 +187,13 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
                 {
                     if(vegradio.isChecked())
                     {
-                        final HashMap<String,Object> order = new HashMap<>();
+//                        final HashMap<String,Object> order = new HashMap<>();
+//
+//                        order.put("base_price",price);
+//                        order.put("name",name);
+//                        order.put("imgurl",uploadedimageUrl);
 
-                        order.put("base_price",price);
-                        order.put("name",name);
-                        order.put("imgurl",uploadedimageUrl);
+                        FoodItem order = new FoodItem(price, name, uploadedimageUrl);
 
                         vegref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -204,11 +207,13 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
                     }
                     else if(mealradio.isChecked())
                     {
-                        final HashMap<String,Object> order = new HashMap<>();
+//                        final HashMap<String,Object> order = new HashMap<>();
+//
+//                        order.put("base_price",price);
+//                        order.put("name",name);
+//                        order.put("imgurl",uploadedimageUrl);
 
-                        order.put("base_price",price);
-                        order.put("name",name);
-                        order.put("imgurl",uploadedimageUrl);
+                        FoodItem order = new FoodItem(price, name, uploadedimageUrl);
 
                         mealref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -222,11 +227,13 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
                     }
                     else if(fruitradio.isChecked())
                     {
-                        final HashMap<String,Object> order = new HashMap<>();
+//                        final HashMap<String,Object> order = new HashMap<>();
+//
+//                        order.put("base_price",price);
+//                        order.put("name",name);
+//                        order.put("imgurl",uploadedimageUrl);
 
-                        order.put("base_price",price);
-                        order.put("name",name);
-                        order.put("imgurl",uploadedimageUrl);
+                        FoodItem order = new FoodItem(price, name, uploadedimageUrl);
 
                         fruitref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

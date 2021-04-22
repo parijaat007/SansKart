@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     protected void onBindViewHolder(@NonNull final FoodItemViewHolder holder, final int position, @NonNull FoodItem model) {
 
                         holder.mFoodItemName.setText(model.getName());
-                        holder.mFoodItemPrice.setText("Price: "+ model.getBase_price());
+                        holder.mFoodItemPrice.setText("Price: "+ model.getBase_price() + "₹");
                         holder.mAddToCart.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -242,12 +242,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 //Toast.makeText(MainActivity.this,getRef(position).getKey(),Toast.LENGTH_SHORT).show();
                             }
                         });
-                        if(!model.getImageUrl().isEmpty())
+
+                        if(model.getImageUrl() != null)
                         {
+                            Log.d("URL: ", model.getImageUrl().toString());
                             StorageReference storageRef;
                             storageRef = FirebaseStorage.getInstance().getReference();
 
-                            Log.d("Msg: ", model.getImageUrl());
                             storageRef.child("images/" + model.getImageUrl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -259,7 +260,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     Toast.makeText(MainActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                                 }
                             });
-
+                        }
+                        else
+                        {
+                            Log.d("URL: ", "No URL Found");
                         }
                     }
 

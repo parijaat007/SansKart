@@ -17,7 +17,6 @@ public class FoodItemViewHolder extends RecyclerView.ViewHolder {
     public TextView mFoodItemPrice;
     public MaterialButton mAddToCart;
 
-
     public FoodItemViewHolder(@NonNull View itemView) {
         super(itemView);
 
