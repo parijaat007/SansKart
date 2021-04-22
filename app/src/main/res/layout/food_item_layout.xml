@@ -17,10 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:orientation="horizontal"
-<<<<<<< Updated upstream
         android:background="@drawable/gradient_background"
-=======
->>>>>>> Stashed changes
         android:padding="10dp">
 
         <ImageView
