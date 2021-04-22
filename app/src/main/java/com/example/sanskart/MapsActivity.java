@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -81,7 +82,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        LatLng latlng=new LatLng(28.7041,77.1025);
+        MarkerOptions markerOptions= new MarkerOptions();
+        markerOptions.title("My Position");
+        markerOptions.position((latlng));
+        googleMap.addMarker(markerOptions);
         mMap.setOnMarkerDragListener(this);
+        CameraUpdate cameraUpdate= CameraUpdateFactory.newLatLngZoom(latlng, 10);
+        googleMap.moveCamera(cameraUpdate);
         getLastKnownLocation();
         Button button = (Button) findViewById(R.id.button_send);
         button.setOnClickListener(new View.OnClickListener() {
