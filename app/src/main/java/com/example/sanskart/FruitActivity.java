@@ -179,6 +179,14 @@ public class FruitActivity extends AppCompatActivity implements NavigationView.O
                 Intent intent_fruit = new Intent(FruitActivity.this,  FruitActivity.class);
                 startActivity(intent_fruit);
                 break;
+            case R.id.others_page:
+                Intent intent_others = new Intent(FruitActivity.this,  OtherActivity.class);
+                startActivity(intent_others);
+                break;
+            case R.id.bnd_page:
+                Intent intent_bnd = new Intent(FruitActivity.this,  BndActivity.class);
+                startActivity(intent_bnd);
+                break;
             case R.id.profile_nav:
                 Intent intent = new Intent(FruitActivity.this,  ProfileActivity.class);
                 startActivity(intent);

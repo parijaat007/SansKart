@@ -179,6 +179,14 @@ public class MealActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent_fruit = new Intent(MealActivity.this,  FruitActivity.class);
                 startActivity(intent_fruit);
                 break;
+            case R.id.others_page:
+                Intent intent_others = new Intent(MealActivity.this,  OtherActivity.class);
+                startActivity(intent_others);
+                break;
+            case R.id.bnd_page:
+                Intent intent_bnd = new Intent(MealActivity.this,  BndActivity.class);
+                startActivity(intent_bnd);
+                break;
             case R.id.profile_nav:
                 Intent intent = new Intent(MealActivity.this,  ProfileActivity.class);
                 startActivity(intent);

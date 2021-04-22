@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,8 +31,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,15 +42,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
-
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BndActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Button btn_logout;
     TextView username;
@@ -94,39 +86,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public  void  onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user==null){
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(BndActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }
             }
         };
 
+
         userref = FirebaseDatabase.getInstance().getReference("user").child(firebaseAuth.getCurrentUser().getUid());
         userref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                current_user = dataSnapshot.getValue(user.class);
 
-                if(!dataSnapshot.exists())
-                {
-                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                    startActivity(intent);
-                    finish();
+                if(current_user.Role.equals("Rider")){
+                    gotorider();
                 }
-                else {
-                    current_user = dataSnapshot.getValue(user.class);
+                if(current_user.Role.equals("Customer"))
+                {
+                    username = (TextView)findViewById(R.id.tv_username);
+                    username.setText("Welcome " + current_user.Username + "!");
 
-                    if (current_user.Role.equals("Retailer")) {
-                        gotoretailer();
-                    }
-
-                    if (current_user.Role.equals("Customer")) {
-                        username = (TextView) findViewById(R.id.tv_username);
-                        username.setText("Welcome " + current_user.Username + "!");
-
-                        userprofile = (ImageView) findViewById(R.id.iv_userimage);
-                        if (firebaseAuth.getCurrentUser().getPhotoUrl() != null) {
-                            Picasso.get().load(firebaseAuth.getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(userprofile);
-                        }
+                    userprofile = (ImageView)findViewById(R.id.iv_userimage);
+                    if(firebaseAuth.getCurrentUser().getPhotoUrl() != null)
+                    {
+                        Picasso.get().load(firebaseAuth.getCurrentUser().getPhotoUrl()).into(userprofile);
                     }
                 }
             }
@@ -146,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,CartMainActivity.class);
+                Intent intent = new Intent(BndActivity.this,CartMainActivity.class);
                 startActivity(intent);
             }
         });
@@ -166,12 +151,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setCheckedItem(R.id.nav_home);
 
-        foodref = FirebaseDatabase.getInstance().getReference().child("food_menu");
+        foodref = FirebaseDatabase.getInstance().getReference().child("fruit_menu");
         cartref = FirebaseDatabase.getInstance().getReference("Cart");
 
         recyclerView = findViewById(R.id.main_recyclerview);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(MainActivity.this);
+        layoutManager = new LinearLayoutManager(BndActivity.this);
         recyclerView.setLayoutManager(layoutManager);
     }
 
@@ -179,38 +164,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
+            case R.id.nav_home:
+                Intent intent_home = new Intent(BndActivity.this,  MainActivity.class);
+                startActivity(intent_home);
             case R.id.vegetables_page:
-                Intent intent_vegetable = new Intent(MainActivity.this,  VegetableActivity.class);
+                Intent intent_vegetable = new Intent(BndActivity.this,  VegetableActivity.class);
                 startActivity(intent_vegetable);
                 break;
             case R.id.meal_page:
-                Intent intent_meal = new Intent(MainActivity.this,  MealActivity.class);
+                Intent intent_meal = new Intent(BndActivity.this,  MealActivity.class);
                 startActivity(intent_meal);
                 break;
             case R.id.fruits_page:
-                Intent intent_fruit = new Intent(MainActivity.this,  FruitActivity.class);
+                Intent intent_fruit = new Intent(BndActivity.this,  FruitActivity.class);
                 startActivity(intent_fruit);
                 break;
             case R.id.others_page:
-                Intent intent_others = new Intent(MainActivity.this,  OtherActivity.class);
+                Intent intent_others = new Intent(BndActivity.this,  OtherActivity.class);
                 startActivity(intent_others);
                 break;
             case R.id.bnd_page:
-                Intent intent_bnd = new Intent(MainActivity.this,  BndActivity.class);
+                Intent intent_bnd = new Intent(BndActivity.this,  BndActivity.class);
                 startActivity(intent_bnd);
                 break;
             case R.id.profile_nav:
-                Intent intent = new Intent(MainActivity.this,  ProfileActivity.class);
+                Intent intent = new Intent(BndActivity.this,  ProfileActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.nav_cart:
-                Intent intent_cart = new Intent(MainActivity.this, CartMainActivity.class);
-                startActivity(intent_cart);
                 break;
             case R.id.log_out:
                 FirebaseAuth.getInstance().signOut();
                 mGoogleSignInClient.signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(BndActivity.this, LoginActivity.class));
                 finish();
         }
 
@@ -242,25 +226,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 //Toast.makeText(MainActivity.this,getRef(position).getKey(),Toast.LENGTH_SHORT).show();
                             }
                         });
-                        if(!model.getImageUrl().isEmpty())
-                        {
-                            StorageReference storageRef;
-                            storageRef = FirebaseStorage.getInstance().getReference();
-
-                            Log.d("Msg: ", model.getImageUrl());
-                            storageRef.child("images/" + model.getImageUrl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Picasso.get().load(uri).into(holder.mFoodImage);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(MainActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
-                        }
                     }
 
                     @NonNull
@@ -290,8 +255,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void gotoretailer() {
-        Intent intent = new Intent(MainActivity.this, RetailerMainActivity.class);
+    private void gotorider() {
+        Intent intent = new Intent(BndActivity.this, RetailerMainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -314,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(MainActivity.this,"Added to Cart",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BndActivity.this,"Added to Cart",Toast.LENGTH_SHORT).show();
                             }
                         });
 

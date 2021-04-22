@@ -179,6 +179,14 @@ public class VegetableActivity extends AppCompatActivity implements NavigationVi
                 Intent intent_fruit = new Intent(VegetableActivity.this,  FruitActivity.class);
                 startActivity(intent_fruit);
                 break;
+            case R.id.others_page:
+                Intent intent_others = new Intent(VegetableActivity.this,  OtherActivity.class);
+                startActivity(intent_others);
+                break;
+            case R.id.bnd_page:
+                Intent intent_bnd = new Intent(VegetableActivity.this,  BndActivity.class);
+                startActivity(intent_bnd);
+                break;
             case R.id.profile_nav:
                 Intent intent = new Intent(VegetableActivity.this,  ProfileActivity.class);
                 startActivity(intent);
