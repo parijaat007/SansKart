@@ -20,8 +20,6 @@
         android:layout_width="wrap_content"
         android:layout_height="58dp"
         android:padding="10dp"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/white"
         android:layout_gravity="bottom|right"
         android:text="Confirm Delivery Location" />
 </FrameLayout>

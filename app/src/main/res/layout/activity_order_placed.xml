@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     tools:context=".Order_placed">
 
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#516873"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,13 +36,11 @@
             android:layout_marginBottom="5dp"
             android:text="Thank you!"
             android:textAlignment="center"
-            android:textColor="@color/white"
             android:textSize="35sp" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Your Order has been Created."
-            android:textColor="@color/white"
             android:textSize="20sp"
             android:textAlignment="center"
             android:layout_marginBottom="10dp"/>
@@ -57,7 +53,6 @@
         android:layout_marginTop="90dp"
         android:text="Your Order Will Be Confirmed!"
         android:textSize="20sp"
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
@@ -68,7 +63,6 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:text="Final Amount: "
-        android:textColor="@color/white"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -106,7 +100,6 @@
         android:layout_gravity="center"
         android:background="@drawable/button_rounded"
         android:text="Continue Shopping"
-        android:textColor="#ffffff"
         android:textSize="18sp"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"

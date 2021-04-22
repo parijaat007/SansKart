@@ -17,7 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:orientation="horizontal"
+<<<<<<< Updated upstream
         android:background="@drawable/gradient_background"
+=======
+>>>>>>> Stashed changes
         android:padding="10dp">
 
         <ImageView
@@ -38,7 +41,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ITEM NAME"
-                android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <TextView
@@ -46,7 +48,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/white"
                 android:text="PRICE:"/>
 
             <com.google.android.material.button.MaterialButton

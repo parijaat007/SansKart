@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     tools:context=".ViewHolder.ThankYouActivity"
     android:orientation="vertical">
 
@@ -21,7 +20,6 @@
         android:layout_height="wrap_content"
         android:text="Thank you for ordering with us!"
         android:textAlignment="center"
-        android:textColor="@color/white"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:textSize="35dp" />
@@ -31,7 +29,6 @@
         android:layout_height="wrap_content"
         android:text="CONTINUE ORDERING"
         android:textSize="20sp"
-        android:textColor="#ffffff"
         android:layout_marginTop="70dp"
         android:background="@drawable/button_rounded"
         android:id="@+id/ContinueButton"

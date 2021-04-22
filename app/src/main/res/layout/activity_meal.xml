@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MealActivity"
-    android:background="@color/colorPrimaryDark"
     android:id="@+id/drawer_layout">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -16,8 +15,7 @@
             android:id="@+id/main_toolbar"
             android:minHeight="?attr/actionBarSize"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white">
+            android:layout_height="wrap_content">
         </androidx.appcompat.widget.Toolbar>
 
 
@@ -48,7 +46,6 @@
                     android:layout_margin="32dp"
                     android:clickable="true"
                     android:src="@drawable/cart_icon"
-                    app:backgroundTint="@color/colorPrimaryDark"
                     app:fabSize="normal"
                     app:rippleColor="@color/colorAccent"
                     app:tint="@android:color/white" />
