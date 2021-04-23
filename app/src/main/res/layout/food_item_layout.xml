@@ -51,6 +51,14 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="Price:"/>
 
+            <TextView
+                android:id="@+id/shop_provider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:fontFamily="@font/lato_bold"
+                android:text="By:"/>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/addtocart_btn"
                 style="@style/TextAppearance.AppCompat.Button"

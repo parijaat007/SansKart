@@ -174,8 +174,6 @@ public class VegetableActivity extends AppCompatActivity implements NavigationVi
                 Intent intent_home = new Intent(VegetableActivity.this,  MainActivity.class);
                 startActivity(intent_home);
             case R.id.vegetables_page:
-                Intent intent_vegetable = new Intent(VegetableActivity.this,  VegetableActivity.class);
-                startActivity(intent_vegetable);
                 break;
             case R.id.fruits_page:
                 Intent intent_fruit = new Intent(VegetableActivity.this,  FruitActivity.class);

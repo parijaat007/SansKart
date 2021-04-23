@@ -10,7 +10,7 @@
     </item>
     <item android:title="Profile">
         <menu>
-            <item android:id="@+id/nav_home" android:title="Go Back Home"/>
+            <item android:id="@+id/nav_home" android:title="Home"/>
             <item android:id="@+id/nav_cart" android:title="Cart"/>
             <item android:id="@+id/profile_nav" android:title="Profile"/>
             <item android:id="@+id/log_out" android:title="Log Out"/>

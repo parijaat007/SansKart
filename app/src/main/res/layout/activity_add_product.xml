@@ -120,7 +120,7 @@
                     android:layout_marginTop="40dp"
                     android:layout_marginLeft="60dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/placeholderimage"
+                    app:srcCompat="@drawable/placeholderimage"
                     android:scaleType="fitXY"/>
 
             </LinearLayout>

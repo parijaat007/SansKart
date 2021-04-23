@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/gradient_background"
+        app:srcCompat="@drawable/gradient_background"
         android:scaleType="fitXY"/>
 
     <LinearLayout
@@ -24,7 +24,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            android:src="@drawable/logo_light" />
+            app:srcCompat="@drawable/logo_light" />
 
 
         <EditText
@@ -95,7 +95,7 @@
                 android:layout_gravity="center"
                 android:background="@null"
                 android:scaleType="fitXY"
-                android:src="@drawable/goog_icon"
+                app:srcCompat="@drawable/goog_icon"
                 />
 
             <ImageButton
@@ -105,7 +105,7 @@
                 android:layout_gravity="center"
                 android:background="@null"
                 android:scaleType="fitXY"
-                android:src="@drawable/phone_icon"
+                app:srcCompat="@drawable/phone_icon"
                 android:layout_marginLeft="10dp"
                 />
 

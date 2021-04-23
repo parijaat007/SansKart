@@ -178,8 +178,6 @@ public class FruitActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(intent_vegetable);
                 break;
             case R.id.fruits_page:
-                Intent intent_fruit = new Intent(FruitActivity.this,  FruitActivity.class);
-                startActivity(intent_fruit);
                 break;
             case R.id.others_page:
                 Intent intent_others = new Intent(FruitActivity.this,  OtherActivity.class);
@@ -220,6 +218,7 @@ public class FruitActivity extends AppCompatActivity implements NavigationView.O
                     protected void onBindViewHolder(@NonNull final FoodItemViewHolder holder, final int position, @NonNull FoodItem model) {
                         holder.mFoodItemName.setText(model.getName());
                         holder.mFoodItemPrice.setText("Price: "+ model.getBase_price());
+                        holder.mShopProvider.setText("By: " + model.getShopName());
                         holder.mAddToCart.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

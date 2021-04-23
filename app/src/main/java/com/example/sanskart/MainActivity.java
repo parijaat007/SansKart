@@ -3,6 +3,7 @@ package com.example.sanskart;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -17,12 +18,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.example.sanskart.Interface.ItemClickListener;
 import com.example.sanskart.Model.FoodItem;
@@ -63,10 +62,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView userprofile;
     FirebaseAuth firebaseAuth;
     ArrayList<FoodItem> list;
+    androidx.appcompat.widget.SearchView sv;
 
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private DatabaseReference userref;
-    private DatabaseReference foodref;
+    private DatabaseReference allref;
     private DatabaseReference cartref;
 
     RecyclerView recyclerView;
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.search_activity);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        sv = findViewById(R.id.searchProduct);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -170,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setCheckedItem(R.id.nav_home);
 
-        foodref = FirebaseDatabase.getInstance().getReference().child("food_menu");
+        allref = FirebaseDatabase.getInstance().getReference().child("all_menu");
         cartref = FirebaseDatabase.getInstance().getReference("Cart");
 
         recyclerView = findViewById(R.id.main_recyclerview);
@@ -207,6 +208,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent_cart = new Intent(MainActivity.this, CartMainActivity.class);
                 startActivity(intent_cart);
                 break;
+            case R.id.nav_home:
+                Intent intent_home = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent_home);
+                break;
             case R.id.log_out:
                 FirebaseAuth.getInstance().signOut();
                 mGoogleSignInClient.signOut();
@@ -224,25 +229,149 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
         firebaseAuth.addAuthStateListener(mAuthStateListener);
 
-        foodref.addValueEventListener(new ValueEventListener() {
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists())
-                {
-                    list = new ArrayList<>();
-                    for(DataSnapshot ds: snapshot.getChildren())
-                    {
-                        list.add(ds.getValue(FoodItem.class));
-                    }
-
-                }
+            public boolean onQueryTextSubmit(String query) {
+                processsearchbyitemname(query);
+                processsearchbyshopname(query);
+                return false;
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
+//        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                processsearch(s);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                return false;
+//            }
+//        });
+    }
+
+    private void processsearchbyitemname(String s) {
+        FirebaseRecyclerOptions<FoodItem> options = new FirebaseRecyclerOptions.Builder<FoodItem>()
+                .setQuery(allref.orderByChild("name").startAt(s).endAt(s+"\uf8ff"),FoodItem.class)
+                .build();
+
+        final FirebaseRecyclerAdapter<FoodItem, FoodItemViewHolder> adapter =
+                new FirebaseRecyclerAdapter<FoodItem, FoodItemViewHolder>(options) {
+
+                    private ItemClickListener listener;
+                    @Override
+                    protected void onBindViewHolder(@NonNull final FoodItemViewHolder holder, final int position, @NonNull FoodItem model) {
+                        holder.mFoodItemName.setText(model.getName());
+                        holder.mFoodItemPrice.setText("Price: "+ model.getBase_price());
+                        holder.mShopProvider.setText("By: " + model.getShopName());
+                        holder.mAddToCart.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                holder.mAddToCart.setEnabled(false);
+                                addToCart(getRef(position).getKey());
+                                //Toast.makeText(MainActivity.this,getRef(position).getKey(),Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        if(model.getImageUrl() != null)
+                        {
+                            Log.d("URL: ", model.getImageUrl().toString());
+                            StorageReference storageRef;
+                            storageRef = FirebaseStorage.getInstance().getReference();
+
+                            storageRef.child("images/" + model.getImageUrl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Picasso.get().load(uri).into(holder.mFoodImage);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(MainActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else {
+                            Log.d("URL: ", "No URL Found");
+                        }
+                    }
+
+                    @NonNull
+                    @Override
+                    public FoodItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_layout,parent,false);
+                        FoodItemViewHolder holder = new FoodItemViewHolder(view);
+                        return holder;
+                    }
+                };
+
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
+
+    private void processsearchbyshopname(String s) {
+        FirebaseRecyclerOptions<FoodItem> options = new FirebaseRecyclerOptions.Builder<FoodItem>()
+                .setQuery(allref.orderByChild("shopName").startAt(s).endAt(s+"\uf8ff"),FoodItem.class)
+                .build();
+
+        final FirebaseRecyclerAdapter<FoodItem, FoodItemViewHolder> adapter =
+                new FirebaseRecyclerAdapter<FoodItem, FoodItemViewHolder>(options) {
+
+                    private ItemClickListener listener;
+                    @Override
+                    protected void onBindViewHolder(@NonNull final FoodItemViewHolder holder, final int position, @NonNull FoodItem model) {
+                        holder.mFoodItemName.setText(model.getName());
+                        holder.mFoodItemPrice.setText("Price: "+ model.getBase_price());
+                        holder.mShopProvider.setText("By: " + model.getShopName());
+                        holder.mAddToCart.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                holder.mAddToCart.setEnabled(false);
+                                addToCart(getRef(position).getKey());
+                                //Toast.makeText(MainActivity.this,getRef(position).getKey(),Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        if(model.getImageUrl() != null)
+                        {
+                            Log.d("URL: ", model.getImageUrl().toString());
+                            StorageReference storageRef;
+                            storageRef = FirebaseStorage.getInstance().getReference();
+
+                            storageRef.child("images/" + model.getImageUrl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Picasso.get().load(uri).into(holder.mFoodImage);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(MainActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else {
+                            Log.d("URL: ", "No URL Found");
+                        }
+                    }
+
+                    @NonNull
+                    @Override
+                    public FoodItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_layout,parent,false);
+                        FoodItemViewHolder holder = new FoodItemViewHolder(view);
+                        return holder;
+                    }
+                };
+
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 
     @Override
@@ -266,7 +395,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void addToCart(final String ref){
-        DatabaseReference foodItemRef = foodref.child(ref);
+        DatabaseReference foodItemRef = allref.child(ref);
         foodItemRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -20,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
+            android:id="@+id/searchProduct"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_margin="5dp"

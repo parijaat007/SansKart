@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +33,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,6 +46,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -180,8 +186,6 @@ public class BndActivity extends AppCompatActivity implements NavigationView.OnN
                 startActivity(intent_others);
                 break;
             case R.id.bnd_page:
-                Intent intent_bnd = new Intent(BndActivity.this,  BndActivity.class);
-                startActivity(intent_bnd);
                 break;
             case R.id.profile_nav:
                 Intent intent = new Intent(BndActivity.this,  ProfileActivity.class);
@@ -214,6 +218,7 @@ public class BndActivity extends AppCompatActivity implements NavigationView.OnN
 
                         holder.mFoodItemName.setText(model.getName());
                         holder.mFoodItemPrice.setText("Price: "+ model.getBase_price());
+                        holder.mShopProvider.setText("By: " + model.getShopName());
                         holder.mAddToCart.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -222,6 +227,28 @@ public class BndActivity extends AppCompatActivity implements NavigationView.OnN
                                 //Toast.makeText(MainActivity.this,getRef(position).getKey(),Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                        if(model.getImageUrl() != null)
+                        {
+                            Log.d("URL: ", model.getImageUrl().toString());
+                            StorageReference storageRef;
+                            storageRef = FirebaseStorage.getInstance().getReference();
+
+                            storageRef.child("images/" + model.getImageUrl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Picasso.get().load(uri).into(holder.mFoodImage);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(BndActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else {
+                            Log.d("URL: ", "No URL Found");
+                        }
                     }
 
                     @NonNull

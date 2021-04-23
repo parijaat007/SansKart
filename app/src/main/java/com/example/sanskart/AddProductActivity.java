@@ -84,6 +84,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
     private DatabaseReference bndref;
     private DatabaseReference vegref;
     private DatabaseReference otherref;
+    private DatabaseReference allref;
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -169,6 +170,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
         otherref = FirebaseDatabase.getInstance().getReference().child("other_menu");
         bndref = FirebaseDatabase.getInstance().getReference().child("bnd_menu");
         vegref = FirebaseDatabase.getInstance().getReference().child("vegetable_menu");
+        allref = FirebaseDatabase.getInstance().getReference().child("all_menu");
 
         addbutton = (Button) findViewById(R.id.AddButton);
         product_name = (EditText) findViewById(R.id.mProductName);
@@ -209,6 +211,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
                                     Toast.makeText(AddProductActivity.this,"Error",Toast.LENGTH_SHORT).show();
                             }
                         });
+                        allref.child(name).setValue(order);
                     }
                     else if(otherradio.isChecked())
                     {
@@ -229,6 +232,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
                                     Toast.makeText(AddProductActivity.this,"Error",Toast.LENGTH_SHORT).show();
                             }
                         });
+                        allref.child(name).setValue(order);
                     }
                     else if(bndradio.isChecked())
                     {
@@ -238,7 +242,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
 //                        order.put("name",name);
 //                        order.put("imgurl",uploadedimageUrl);
 
-                        FoodItem order = new FoodItem(price, name, uploadedimageUrl);
+                        FoodItem order = new FoodItem(price, name, uploadedimageUrl, shopname);
 
                         otherref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -249,6 +253,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
                                     Toast.makeText(AddProductActivity.this,"Error",Toast.LENGTH_SHORT).show();
                             }
                         });
+                        allref.child(name).setValue(order);
                     }
                     else if(fruitradio.isChecked())
                     {
@@ -269,6 +274,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
                                     Toast.makeText(AddProductActivity.this,"Error",Toast.LENGTH_SHORT).show();
                             }
                         });
+                        allref.child(name).setValue(order);
                     }
                     else
                     {

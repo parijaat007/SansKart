@@ -4,9 +4,6 @@ public class FoodItem {
     String base_price;
     String name;
     String imageUrl;
-
-
-
     String shopName;
 
     public FoodItem(){

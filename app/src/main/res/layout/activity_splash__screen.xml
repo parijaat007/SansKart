@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:contentDescription="Splash Background"
         android:scaleType="centerCrop"
-        android:src="@drawable/gradient_background"
+        app:srcCompat="@drawable/gradient_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,7 @@
         android:id="@+id/logoImage"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:src="@drawable/logo_light"
+        app:srcCompat="@drawable/logo_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/logo_id"
         app:layout_constraintStart_toStartOf="parent"
