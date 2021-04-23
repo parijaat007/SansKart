@@ -184,6 +184,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
+            case R.id.nav_orders:
+                startActivity(new Intent(getApplicationContext(), MyOrdersActivity.class));
+                break;
             case R.id.vegetables_page:
                 Intent intent_vegetable = new Intent(MainActivity.this,  VegetableActivity.class);
                 startActivity(intent_vegetable);

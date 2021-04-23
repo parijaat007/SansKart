@@ -11,6 +11,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -25,10 +27,16 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
@@ -39,10 +47,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private DatabaseReference fromReference;
     private DatabaseReference toReference;
     private String PhoneNumber;
+    public String customername = "";
     private String uid;
     private String cartTotalAmt;
     private Button SendButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,15 +155,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void createOrder(final double lat, final double longt, final DatabaseReference OrderNode){
         final HashMap<String,Object> order = new HashMap<>();
 
+//        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();;
+//        DatabaseReference userref = FirebaseDatabase.getInstance().getReference("user").child();
+//        userref.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                user current_user = snapshot.getValue(user.class);
+//                customername = current_user.fullName;
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+
         order.put("CartTotalAmount",cartTotalAmt);
         order.put("Customer_UID",uid);
+        order.put("Customer_name",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         order.put("Phone_Number",PhoneNumber);
         order.put("Latitude",String.valueOf(lat));
         order.put("Longitude",String.valueOf(longt));
         order.put("Status","0");
         order.put("Distance","NA");
 
-        OrderNode.child(uid).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+        OrderNode.child(UUID.randomUUID().toString()).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()) {

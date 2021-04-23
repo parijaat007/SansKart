@@ -8,21 +8,29 @@
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="15dp">
+
+        <TextView
+            android:id="@+id/text_view_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Name"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/text_view_mob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/text_view_cart"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Mobile Number"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/text_view_cart"
@@ -31,33 +39,14 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:text="Cart Size"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        <TextView
-            android:id="@+id/text_view_Latitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_mob"
-            android:layout_alignParentStart="true"
-            android:text="Latitude" />
-
-        <TextView
-            android:id="@+id/text_view_Longitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="false"
-            android:layout_below="@id/text_view_mob"
-            android:layout_toRightOf="@id/text_view_Latitude"
-            android:text="Longitude" />
+            android:textSize="20sp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_cart"
-            android:layout_alignParentEnd="true"
             android:text="View Details" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

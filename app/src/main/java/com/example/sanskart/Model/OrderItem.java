@@ -2,6 +2,7 @@ package com.example.sanskart.Model;
 
 public class OrderItem
 {
+    String Customer_name;
     String Phone_Number;
     String Latitude;
     String Longitude;
@@ -15,7 +16,7 @@ public class OrderItem
 
     }
 
-    public OrderItem(String phone_number, String latitude, String longitude, String cartTotal,String status, String customer_UID, String distance)
+    public OrderItem(String phone_number, String latitude, String longitude, String cartTotal,String status, String customer_UID, String distance, String name)
     {
         Phone_Number = phone_number;
         Latitude = latitude;
@@ -24,6 +25,7 @@ public class OrderItem
         Status = status;
         Customer_UID = customer_UID;
         Distance = distance;
+        Customer_name = name;
     }
 
     public String getPhone_Number() {
@@ -80,5 +82,17 @@ public class OrderItem
 
     public void setDistance(String distance) {
         Distance = distance;
+    }
+
+    public void setCustomer_name(String customer_name) {
+        Customer_name = customer_name;
+    }
+
+    public void setCartTotalAmount(String cartTotalAmount) {
+        CartTotalAmount = cartTotalAmount;
+    }
+
+    public String getCustomer_name() {
+        return Customer_name;
     }
 }

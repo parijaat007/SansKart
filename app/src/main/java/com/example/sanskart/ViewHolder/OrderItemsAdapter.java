@@ -14,6 +14,8 @@ import com.example.sanskart.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
+import org.w3c.dom.Text;
+
 public class OrderItemsAdapter extends FirebaseRecyclerAdapter<OrderItem, OrderItemsAdapter.OrderHolder> {
 
     private OnItemClickListener listener;
@@ -27,8 +29,7 @@ public class OrderItemsAdapter extends FirebaseRecyclerAdapter<OrderItem, OrderI
     {
         holder.mobile_no.setText(model.getPhone_Number());
         holder.cart_size.setText(model.getCartTotalAmount());
-        holder.latitude.setText(model.getLatitude());
-        holder.longitude.setText(model.getLongitude());
+        holder.name.setText(model.getCustomer_name());
 
         holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,16 +53,14 @@ public class OrderItemsAdapter extends FirebaseRecyclerAdapter<OrderItem, OrderI
     class OrderHolder extends RecyclerView.ViewHolder {
         TextView mobile_no;
         TextView cart_size;
-        TextView latitude;
-        TextView longitude;
+        TextView name;
         Button accept;
 
         public OrderHolder(@NonNull View itemView) {
             super(itemView);
             mobile_no = itemView.findViewById(R.id.text_view_mob);
             cart_size = itemView.findViewById(R.id.text_view_cart);
-            latitude = itemView.findViewById(R.id.text_view_Latitude);
-            longitude = itemView.findViewById(R.id.text_view_Longitude);
+            name = itemView.findViewById(R.id.text_view_name);
             accept = itemView.findViewById(R.id.button_send);
 
         }
