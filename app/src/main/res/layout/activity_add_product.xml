@@ -96,7 +96,15 @@
                         android:textSize="18sp" />
 
                     <RadioButton
-                        android:id="@+id/MealButton"
+                        android:id="@+id/OtherButton"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:text="Meals"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/bndButton"
                         android:layout_width="130dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"

@@ -151,7 +151,7 @@ public class BndActivity extends AppCompatActivity implements NavigationView.OnN
 
         navigationView.setCheckedItem(R.id.nav_home);
 
-        foodref = FirebaseDatabase.getInstance().getReference().child("fruit_menu");
+        foodref = FirebaseDatabase.getInstance().getReference().child("bnd_menu");
         cartref = FirebaseDatabase.getInstance().getReference("Cart");
 
         recyclerView = findViewById(R.id.main_recyclerview);
@@ -170,10 +170,6 @@ public class BndActivity extends AppCompatActivity implements NavigationView.OnN
             case R.id.vegetables_page:
                 Intent intent_vegetable = new Intent(BndActivity.this,  VegetableActivity.class);
                 startActivity(intent_vegetable);
-                break;
-            case R.id.meal_page:
-                Intent intent_meal = new Intent(BndActivity.this,  MealActivity.class);
-                startActivity(intent_meal);
                 break;
             case R.id.fruits_page:
                 Intent intent_fruit = new Intent(BndActivity.this,  FruitActivity.class);

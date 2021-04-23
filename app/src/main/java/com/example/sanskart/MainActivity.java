@@ -183,10 +183,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent_vegetable = new Intent(MainActivity.this,  VegetableActivity.class);
                 startActivity(intent_vegetable);
                 break;
-            case R.id.meal_page:
-                Intent intent_meal = new Intent(MainActivity.this,  MealActivity.class);
-                startActivity(intent_meal);
-                break;
             case R.id.fruits_page:
                 Intent intent_fruit = new Intent(MainActivity.this,  FruitActivity.class);
                 startActivity(intent_fruit);

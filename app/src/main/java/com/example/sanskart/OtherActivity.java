@@ -151,7 +151,7 @@ public class OtherActivity extends AppCompatActivity implements NavigationView.O
 
         navigationView.setCheckedItem(R.id.nav_home);
 
-        foodref = FirebaseDatabase.getInstance().getReference().child("fruit_menu");
+        foodref = FirebaseDatabase.getInstance().getReference().child("other_menu");
         cartref = FirebaseDatabase.getInstance().getReference("Cart");
 
         recyclerView = findViewById(R.id.main_recyclerview);
@@ -170,10 +170,6 @@ public class OtherActivity extends AppCompatActivity implements NavigationView.O
             case R.id.vegetables_page:
                 Intent intent_vegetable = new Intent(OtherActivity.this,  VegetableActivity.class);
                 startActivity(intent_vegetable);
-                break;
-            case R.id.meal_page:
-                Intent intent_meal = new Intent(OtherActivity.this,  MealActivity.class);
-                startActivity(intent_meal);
                 break;
             case R.id.fruits_page:
                 Intent intent_fruit = new Intent(OtherActivity.this,  FruitActivity.class);

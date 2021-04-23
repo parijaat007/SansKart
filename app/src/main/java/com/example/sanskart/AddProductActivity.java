@@ -66,7 +66,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
 
     Button addbutton, uploadbutton;
     EditText product_name, product_price;
-    RadioButton fruitradio, vegradio, mealradio;
+    RadioButton fruitradio, vegradio, bndradio, otherradio;
     ImageView productimage;
     String uploadedimageUrl = "";
 
@@ -80,8 +80,9 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private DatabaseReference userref;
     private DatabaseReference fruitref;
-    private DatabaseReference mealref;
+    private DatabaseReference bndref;
     private DatabaseReference vegref;
+    private DatabaseReference otherref;
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -163,7 +164,8 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
         // Add Product
 
         fruitref = FirebaseDatabase.getInstance().getReference().child("fruit_menu");
-        mealref = FirebaseDatabase.getInstance().getReference().child("food_menu");
+        otherref = FirebaseDatabase.getInstance().getReference().child("other_menu");
+        bndref = FirebaseDatabase.getInstance().getReference().child("bnd_menu");
         vegref = FirebaseDatabase.getInstance().getReference().child("vegetable_menu");
 
         addbutton = (Button) findViewById(R.id.AddButton);
@@ -171,7 +173,8 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
         product_price = (EditText) findViewById(R.id.mProductPrice);
         fruitradio = (RadioButton) findViewById(R.id.FruitButton);
         vegradio = (RadioButton) findViewById(R.id.VegetableButton);
-        mealradio = (RadioButton) findViewById(R.id.MealButton);
+        otherradio = (RadioButton) findViewById(R.id.OtherButton);
+        bndradio = (RadioButton) findViewById(R.id.bndButton);
 
         addbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,7 +208,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
                             }
                         });
                     }
-                    else if(mealradio.isChecked())
+                    else if(otherradio.isChecked())
                     {
 //                        final HashMap<String,Object> order = new HashMap<>();
 //
@@ -215,7 +218,27 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
 
                         FoodItem order = new FoodItem(price, name, uploadedimageUrl);
 
-                        mealref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        otherref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()) {
+                                    Toast.makeText(AddProductActivity.this,"Product Added",Toast.LENGTH_SHORT).show();
+                                }else
+                                    Toast.makeText(AddProductActivity.this,"Error",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else if(bndradio.isChecked())
+                    {
+//                        final HashMap<String,Object> order = new HashMap<>();
+//
+//                        order.put("base_price",price);
+//                        order.put("name",name);
+//                        order.put("imgurl",uploadedimageUrl);
+
+                        FoodItem order = new FoodItem(price, name, uploadedimageUrl);
+
+                        otherref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()) {

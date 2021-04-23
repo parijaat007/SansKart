@@ -3,7 +3,6 @@
     <item android:title="Categories">
         <menu>
             <item android:id="@+id/vegetables_page" android:title="Vegetables"/>
-            <item android:id="@+id/meal_page" android:title="Meal basket"/>
             <item android:id="@+id/fruits_page" android:title="Fruits"/>
             <item android:id="@+id/bnd_page" android:title="Bread and Dairy"/>
             <item android:id="@+id/others_page" android:title="Others"/>
