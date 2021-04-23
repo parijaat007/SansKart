@@ -38,6 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ITEM NAME"
+                android:textColor="@color/white"
+                android:fontFamily="@font/lato_bold"
                 android:textSize="18sp" />
 
             <TextView
@@ -45,7 +47,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="PRICE:"/>
+                android:textColor="@color/white"
+                android:fontFamily="@font/lato_bold"
+                android:text="Price:"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/addtocart_btn"

@@ -106,7 +106,7 @@ public class FruitActivity extends AppCompatActivity implements NavigationView.O
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 current_user = dataSnapshot.getValue(user.class);
 
-                if(current_user.Role.equals("Rider")){
+                if(current_user.Role.equals("Retailer")){
                     gotorider();
                 }
                 if(current_user.Role.equals("Customer"))
@@ -215,6 +215,7 @@ public class FruitActivity extends AppCompatActivity implements NavigationView.O
         firebaseAuth.addAuthStateListener(mAuthStateListener);
 
         FirebaseRecyclerOptions<FoodItem> options = new FirebaseRecyclerOptions.Builder<FoodItem>().setQuery(foodref,FoodItem.class).build();
+
         final FirebaseRecyclerAdapter<FoodItem, FoodItemViewHolder> adapter =
                 new FirebaseRecyclerAdapter<FoodItem, FoodItemViewHolder>(options) {
 

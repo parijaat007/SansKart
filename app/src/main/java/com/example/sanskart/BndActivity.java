@@ -100,7 +100,7 @@ public class BndActivity extends AppCompatActivity implements NavigationView.OnN
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 current_user = dataSnapshot.getValue(user.class);
 
-                if(current_user.Role.equals("Rider")){
+                if(current_user.Role.equals("Retailer")){
                     gotorider();
                 }
                 if(current_user.Role.equals("Customer"))

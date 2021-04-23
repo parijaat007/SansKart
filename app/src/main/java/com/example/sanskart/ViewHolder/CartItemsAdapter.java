@@ -27,12 +27,12 @@ public class CartItemsAdapter extends FirebaseRecyclerAdapter<CartItem , CartIte
     @Override
     protected void onBindViewHolder(@NonNull CartItemsViewHolder holder, final int position, @NonNull final CartItem model) {
         holder.mFoodName.setText(model.getName());
-        holder.mFoodPrice.setText("Base Price : "+model.getPrice());
+        holder.mFoodPrice.setText("Base Price : "+model.getPrice() + "₹");
         holder.mNumberButton.setNumber(String.valueOf(model.getQuantity()));
         int q = Integer.parseInt(model.getQuantity());
         int bp = Integer.parseInt(model.getPrice());
         int tp = q*bp;
-        holder.mTotalPrice.setText("Price : "+tp);
+        holder.mTotalPrice.setText("Price : "+tp + "₹");
 
         holder.mRemove.setOnClickListener(new View.OnClickListener() {
             @Override

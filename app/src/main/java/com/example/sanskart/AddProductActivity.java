@@ -69,6 +69,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
     RadioButton fruitradio, vegradio, mealradio;
     ImageView productimage;
     String uploadedimageUrl = "";
+    String shopname = "";
 
     TextView username;
     ImageView userprofile;
@@ -125,6 +126,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 current_user = dataSnapshot.getValue(user.class);
 
+                shopname = current_user.Username;
                 username = (TextView)findViewById(R.id.tv_username);
                 username.setText("Welcome " + current_user.Username + "!");
 
@@ -193,7 +195,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
 //                        order.put("name",name);
 //                        order.put("imgurl",uploadedimageUrl);
 
-                        FoodItem order = new FoodItem(price, name, uploadedimageUrl);
+                        FoodItem order = new FoodItem(price, name, uploadedimageUrl, shopname);
 
                         vegref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -213,7 +215,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
 //                        order.put("name",name);
 //                        order.put("imgurl",uploadedimageUrl);
 
-                        FoodItem order = new FoodItem(price, name, uploadedimageUrl);
+                        FoodItem order = new FoodItem(price, name, uploadedimageUrl, shopname);
 
                         mealref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -233,7 +235,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
 //                        order.put("name",name);
 //                        order.put("imgurl",uploadedimageUrl);
 
-                        FoodItem order = new FoodItem(price, name, uploadedimageUrl);
+                        FoodItem order = new FoodItem(price, name, uploadedimageUrl, shopname);
 
                         fruitref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
