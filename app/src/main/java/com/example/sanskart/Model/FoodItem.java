@@ -5,6 +5,10 @@ public class FoodItem {
     String name;
     String imageUrl;
 
+
+
+    String shopName;
+
     public FoodItem(){
 
     }
@@ -14,10 +18,11 @@ public class FoodItem {
 //        this.name = name;
 //    }
 
-    public FoodItem(String price, String name, String url) {
+    public FoodItem(String price, String name, String url, String shopName) {
         this.base_price = price;
         this.name = name;
         this.imageUrl = url;
+        this.shopName = shopName;
     }
 
     public String getBase_price() {
@@ -42,5 +47,13 @@ public class FoodItem {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 }

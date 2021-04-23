@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView username;
     ImageView userprofile;
     FirebaseAuth firebaseAuth;
+    ArrayList<FoodItem> list;
+
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private DatabaseReference userref;
     private DatabaseReference foodref;
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.search_activity);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -220,60 +224,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
         firebaseAuth.addAuthStateListener(mAuthStateListener);
 
-        FirebaseRecyclerOptions<FoodItem> options = new FirebaseRecyclerOptions.Builder<FoodItem>().setQuery(foodref,FoodItem.class).build();
-        final FirebaseRecyclerAdapter<FoodItem, FoodItemViewHolder> adapter =
-                new FirebaseRecyclerAdapter<FoodItem, FoodItemViewHolder>(options) {
-
-                    private ItemClickListener listener;
-                    @Override
-                    protected void onBindViewHolder(@NonNull final FoodItemViewHolder holder, final int position, @NonNull FoodItem model) {
-
-                        holder.mFoodItemName.setText(model.getName());
-                        holder.mFoodItemPrice.setText("Price: "+ model.getBase_price() + "₹");
-                        holder.mAddToCart.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                holder.mAddToCart.setEnabled(false);
-                                addToCart(getRef(position).getKey());
-                                //Toast.makeText(MainActivity.this,getRef(position).getKey(),Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                        if(model.getImageUrl() != null)
-                        {
-                            Log.d("URL: ", model.getImageUrl().toString());
-                            StorageReference storageRef;
-                            storageRef = FirebaseStorage.getInstance().getReference();
-
-                            storageRef.child("images/" + model.getImageUrl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Picasso.get().load(uri).into(holder.mFoodImage);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(MainActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                        else
-                        {
-                            Log.d("URL: ", "No URL Found");
-                        }
+        foodref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                {
+                    list = new ArrayList<>();
+                    for(DataSnapshot ds: snapshot.getChildren())
+                    {
+                        list.add(ds.getValue(FoodItem.class));
                     }
 
-                    @NonNull
-                    @Override
-                    public FoodItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_layout,parent,false);
-                        FoodItemViewHolder holder = new FoodItemViewHolder(view);
-                        return holder;
-                    }
-                };
+                }
+            }
 
-        recyclerView.setAdapter(adapter);
-        adapter.startListening();
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

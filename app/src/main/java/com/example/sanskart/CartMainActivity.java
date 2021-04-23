@@ -174,8 +174,6 @@ public class CartMainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-
-
         FirebaseRecyclerOptions<CartItem> options = new FirebaseRecyclerOptions.Builder<CartItem>()
                 .setQuery(mCartRef.child("Products"),CartItem.class)
                 .build();
