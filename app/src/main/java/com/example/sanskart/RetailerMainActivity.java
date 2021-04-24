@@ -7,6 +7,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,12 +34,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class RetailerMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -82,7 +90,35 @@ public class RetailerMainActivity extends AppCompatActivity implements Navigatio
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        setUpRecyclerView();
+        DatabaseReference userref = FirebaseDatabase.getInstance().getReference("user").child(firebaseAuth.getCurrentUser().getUid());
+        userref.addListenerForSingleValueEvent(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+               if (!dataSnapshot.exists()) {
+                   Intent intent = new Intent(RetailerMainActivity.this, ProfileActivity.class);
+                   startActivity(intent);
+                   finish();
+               } else {
+                   user current_user = dataSnapshot.getValue(user.class);
+
+                   TextView username = (TextView) findViewById(R.id.tv_username);
+                   username.setText("Welcome " + current_user.Username + "!");
+
+                   ImageView userprofile = (ImageView) findViewById(R.id.iv_userimage);
+                   if (firebaseAuth.getCurrentUser().getPhotoUrl() != null) {
+                       Picasso.get().load(firebaseAuth.getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(userprofile);
+                   }
+               }
+           }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+            setUpRecyclerView();
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
