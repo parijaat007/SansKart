@@ -44,43 +44,44 @@ public class Order_placed extends AppCompatActivity {
         mTotalPayable = findViewById(R.id.Total_Amount_Payable_TextView);
 
         amt_pay.setText("AMOUNT PAYABLE : " + amountPayable + "Rs.");
+        status.setText("Your Order Has Been Placed!");
 
-        orderref = FirebaseDatabase.getInstance().getReference().child("Orders").child(UID);
-
-        orderref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                OrderItem order = dataSnapshot.getValue(OrderItem.class);
-                String s = order.getStatus();
-
-                if(s.equals("0"))
-                    status.setText("Your Order Has Been Placed!");
-//                }else if(s.equals("1")){
-//                    status.setText("RIDER HAS ACCEPTED YOUR ORDER.");
-//                    mDistance.setVisibility(View.VISIBLE);
-//                    double distance = Double.parseDouble(order.getDistance());
-//                    mDistance.setText("Delivery Distance : "+order.getDistance()+" Km");
+//        orderref = FirebaseDatabase.getInstance().getReference().child("Orders").child(UID);
 //
-//                    double Delivery_Charge = distance * deliveryChargePerKM;
-//                    double total_pay = Delivery_Charge + Double.parseDouble(amountPayable);
+//        orderref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                OrderItem order = dataSnapshot.getValue(OrderItem.class);
+//                String s = order.getStatus();
 //
-//                    mTotalPayable.setVisibility(View.VISIBLE);
+//                if(s.equals("0"))
 //
-//                    mTotalPayable.setText("Total Payable Amount: "+total_pay);
+////                }else if(s.equals("1")){
+////                    status.setText("RIDER HAS ACCEPTED YOUR ORDER.");
+////                    mDistance.setVisibility(View.VISIBLE);
+////                    double distance = Double.parseDouble(order.getDistance());
+////                    mDistance.setText("Delivery Distance : "+order.getDistance()+" Km");
+////
+////                    double Delivery_Charge = distance * deliveryChargePerKM;
+////                    double total_pay = Delivery_Charge + Double.parseDouble(amountPayable);
+////
+////                    mTotalPayable.setVisibility(View.VISIBLE);
+////
+////                    mTotalPayable.setText("Total Payable Amount: "+total_pay);
+////
+////
+////
+////                }else if(s.equals("2")){
+////                    status.setText("ORDER HAS BEEN DELIVERED.");
+////                }
+////                //Toast.makeText(Order_placed.this,"Status "+order.getStatus(),Toast.LENGTH_SHORT).show();
+//            }
 //
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
 //
-//
-//                }else if(s.equals("2")){
-//                    status.setText("ORDER HAS BEEN DELIVERED.");
-//                }
-//                //Toast.makeText(Order_placed.this,"Status "+order.getStatus(),Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//            }
+//        });
 
         continuebtn = (Button) findViewById(R.id.ContinueButton);
         continuebtn.setOnClickListener(new View.OnClickListener() {

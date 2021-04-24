@@ -34,6 +34,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RetailerMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -168,9 +172,10 @@ public class RetailerMainActivity extends AppCompatActivity implements Navigatio
 
         adapter.setOnItemClickListener(new OrderItemsAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(String latitude, String longitude, String phone, String cust_uid, String status,String amount)
+            public void onItemClick(String id)
             {
-                Toast.makeText(RetailerMainActivity.this, "Button Clicked", Toast.LENGTH_SHORT).show();
+                orderref.child(id).child("Status").setValue("1");
+                Toast.makeText(RetailerMainActivity.this, "The Order Has Been Delivered", Toast.LENGTH_SHORT).show();
             }
         });
 

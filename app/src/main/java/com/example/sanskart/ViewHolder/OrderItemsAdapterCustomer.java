@@ -16,22 +16,27 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import org.w3c.dom.Text;
 
-public class OrderItemsAdapter extends FirebaseRecyclerAdapter<OrderItem, OrderItemsAdapter.OrderHolder> {
+public class OrderItemsAdapterCustomer extends FirebaseRecyclerAdapter<OrderItem, OrderItemsAdapterCustomer.OrderHolderCustomer> {
 
     private OnItemClickListener listener;
 
-    public OrderItemsAdapter(@NonNull FirebaseRecyclerOptions<OrderItem> options) {
+    public OrderItemsAdapterCustomer(@NonNull FirebaseRecyclerOptions<OrderItem> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull OrderHolder holder, int position, @NonNull final OrderItem model)
+    protected void onBindViewHolder(@NonNull OrderHolderCustomer holder, int position, @NonNull final OrderItem model)
     {
         holder.mobile_no.setText("Mobile No: " + model.getPhone_Number());
         holder.cart_size.setText("Price: " + model.getCartTotalAmount() + "₹");
         holder.name.setText("Name: " + model.getCustomer_name());
 
-        holder.accept.setOnClickListener(new View.OnClickListener() {
+        if(model.getStatus().equals("0"))
+            holder.status.setText("Order Status: Order Pending");
+        else
+            holder.status.setText("Order Status: Delivered");
+
+        holder.feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onItemClick(model.getOrderID());
@@ -41,27 +46,29 @@ public class OrderItemsAdapter extends FirebaseRecyclerAdapter<OrderItem, OrderI
 
     @NonNull
     @Override
-    public OrderHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public OrderHolderCustomer onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_item,
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_item_customer,
                 parent, false);
-        OrderHolder holder = new OrderHolder(v);
+        OrderHolderCustomer holder = new OrderHolderCustomer(v);
         return holder;
 
     }
 
-    class OrderHolder extends RecyclerView.ViewHolder {
+    class OrderHolderCustomer extends RecyclerView.ViewHolder {
         TextView mobile_no;
         TextView cart_size;
+        TextView status;
         TextView name;
-        Button accept;
+        Button feedback;
 
-        public OrderHolder(@NonNull View itemView) {
+        public OrderHolderCustomer(@NonNull View itemView) {
             super(itemView);
+            status = itemView.findViewById(R.id.text_view_status);
             mobile_no = itemView.findViewById(R.id.text_view_mob);
             cart_size = itemView.findViewById(R.id.text_view_cart);
             name = itemView.findViewById(R.id.text_view_name);
-            accept = itemView.findViewById(R.id.button_send);
+            feedback = itemView.findViewById(R.id.button_feedback);
 
         }
     }

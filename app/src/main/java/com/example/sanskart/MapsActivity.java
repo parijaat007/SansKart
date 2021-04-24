@@ -154,6 +154,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void createOrder(final double lat, final double longt, final DatabaseReference OrderNode){
         final HashMap<String,Object> order = new HashMap<>();
+        final String orderid = UUID.randomUUID().toString();
 
 //        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();;
 //        DatabaseReference userref = FirebaseDatabase.getInstance().getReference("user").child();
@@ -178,15 +179,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         order.put("Longitude",String.valueOf(longt));
         order.put("Status","0");
         order.put("Distance","NA");
+        order.put("OrderID", orderid);
 
-        OrderNode.child(UUID.randomUUID().toString()).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+        OrderNode.child(orderid).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()) {
                     //Toast.makeText(MapsActivity.this,"Amount:"+order.get("CartTotalAmount"),Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MapsActivity.this,Order_placed.class);
                     intent.putExtra("TotalAmount",order.get("CartTotalAmount").toString());
-                    intent.putExtra("UID",uid);
+                    intent.putExtra("UID",orderid);
                     startActivity(intent);
                 }else
                     Toast.makeText(MapsActivity.this,"Error.",Toast.LENGTH_SHORT).show();

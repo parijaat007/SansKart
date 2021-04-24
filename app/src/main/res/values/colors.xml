@@ -6,4 +6,5 @@
     <color name="background">#EEEDEF</color>
     <color name="white">#ffffff</color>
     <color name="deleteColor">#D62F01</color>
+    <color name="yellow">#FFD700</color>
 </resources>

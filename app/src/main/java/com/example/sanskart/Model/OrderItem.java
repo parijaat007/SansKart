@@ -10,13 +10,14 @@ public class OrderItem
     String Status;
     String Customer_UID;
     String Distance;
+    String OrderID;
 
     public OrderItem()
     {
 
     }
 
-    public OrderItem(String phone_number, String latitude, String longitude, String cartTotal,String status, String customer_UID, String distance, String name)
+    public OrderItem(String phone_number, String latitude, String longitude, String cartTotal,String status, String customer_UID, String distance, String name, String id)
     {
         Phone_Number = phone_number;
         Latitude = latitude;
@@ -26,6 +27,7 @@ public class OrderItem
         Customer_UID = customer_UID;
         Distance = distance;
         Customer_name = name;
+        OrderID = id;
     }
 
     public String getPhone_Number() {
@@ -94,5 +96,13 @@ public class OrderItem
 
     public String getCustomer_name() {
         return Customer_name;
+    }
+
+    public String getOrderID() {
+        return OrderID;
+    }
+
+    public void setOrderID(String orderID) {
+        OrderID = orderID;
     }
 }

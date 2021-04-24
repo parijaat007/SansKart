@@ -244,7 +244,7 @@ public class AddProductActivity extends AppCompatActivity implements NavigationV
 
                         FoodItem order = new FoodItem(price, name, uploadedimageUrl, shopname);
 
-                        otherref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        bndref.child(name).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()) {

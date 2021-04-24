@@ -212,8 +212,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent_cart);
                 break;
             case R.id.nav_home:
-                Intent intent_home = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent_home);
                 break;
             case R.id.log_out:
                 FirebaseAuth.getInstance().signOut();
@@ -236,7 +234,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public boolean onQueryTextSubmit(String query) {
                 processsearchbyitemname(query);
-                processsearchbyshopname(query);
                 return false;
             }
 
@@ -271,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     protected void onBindViewHolder(@NonNull final FoodItemViewHolder holder, final int position, @NonNull FoodItem model) {
                         holder.mFoodItemName.setText(model.getName());
-                        holder.mFoodItemPrice.setText("Price: "+ model.getBase_price());
+                        holder.mFoodItemPrice.setText("Price: "+ model.getBase_price() + "₹");
                         holder.mShopProvider.setText("By: " + model.getShopName());
                         holder.mAddToCart.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -318,64 +315,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter.startListening();
     }
 
-    private void processsearchbyshopname(String s) {
-        FirebaseRecyclerOptions<FoodItem> options = new FirebaseRecyclerOptions.Builder<FoodItem>()
-                .setQuery(allref.orderByChild("shopName").startAt(s).endAt(s+"\uf8ff"),FoodItem.class)
-                .build();
-
-        final FirebaseRecyclerAdapter<FoodItem, FoodItemViewHolder> adapter =
-                new FirebaseRecyclerAdapter<FoodItem, FoodItemViewHolder>(options) {
-
-                    private ItemClickListener listener;
-                    @Override
-                    protected void onBindViewHolder(@NonNull final FoodItemViewHolder holder, final int position, @NonNull FoodItem model) {
-                        holder.mFoodItemName.setText(model.getName());
-                        holder.mFoodItemPrice.setText("Price: "+ model.getBase_price());
-                        holder.mShopProvider.setText("By: " + model.getShopName());
-                        holder.mAddToCart.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                holder.mAddToCart.setEnabled(false);
-                                addToCart(getRef(position).getKey());
-                                //Toast.makeText(MainActivity.this,getRef(position).getKey(),Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                        if(model.getImageUrl() != null)
-                        {
-                            Log.d("URL: ", model.getImageUrl().toString());
-                            StorageReference storageRef;
-                            storageRef = FirebaseStorage.getInstance().getReference();
-
-                            storageRef.child("images/" + model.getImageUrl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Picasso.get().load(uri).into(holder.mFoodImage);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(MainActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                        else {
-                            Log.d("URL: ", "No URL Found");
-                        }
-                    }
-
-                    @NonNull
-                    @Override
-                    public FoodItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_layout,parent,false);
-                        FoodItemViewHolder holder = new FoodItemViewHolder(view);
-                        return holder;
-                    }
-                };
-
-        recyclerView.setAdapter(adapter);
-        adapter.startListening();
-    }
 
     @Override
     protected void onResume() {

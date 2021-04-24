@@ -217,7 +217,7 @@ public class OtherActivity extends AppCompatActivity implements NavigationView.O
                     protected void onBindViewHolder(@NonNull final FoodItemViewHolder holder, final int position, @NonNull FoodItem model) {
 
                         holder.mFoodItemName.setText(model.getName());
-                        holder.mFoodItemPrice.setText("Price: "+ model.getBase_price());
+                        holder.mFoodItemPrice.setText("Price: "+ model.getBase_price() + "₹");
                         holder.mShopProvider.setText("By: " + model.getShopName());
                         holder.mAddToCart.setOnClickListener(new View.OnClickListener() {
                             @Override

@@ -3,4 +3,10 @@
     <string name="openNavDrawer">Navigation Drawer Open</string>
     <string name="closeNavDrawer">Navigation Drawer Close</string>
     <string name="title_activity_rider_maps">Map</string>
+    <string name="feeback_title">Sanskart Feeback</string>
+    <string name="brand_description">Looks like your order was delivered</string>
+    <string name="customer_review_question">How would you rate our services?</string>
+    <string name="positive_feedback_text">Awesome</string>
+    <string name="negative_feedback_text">Bad</string>
+    <string name="ambiguity_feedback_text">Help</string>
 </resources>

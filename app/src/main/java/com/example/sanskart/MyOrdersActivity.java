@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,11 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.codemybrainsout.ratingdialog.RatingDialog;
 import com.example.sanskart.Interface.ItemClickListener;
 import com.example.sanskart.Model.FoodItem;
 import com.example.sanskart.Model.OrderItem;
 import com.example.sanskart.ViewHolder.FoodItemViewHolder;
 import com.example.sanskart.ViewHolder.OrderItemsAdapter;
+import com.example.sanskart.ViewHolder.OrderItemsAdapterCustomer;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -54,6 +57,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+
 public class MyOrdersActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView username;
@@ -62,7 +66,7 @@ public class MyOrdersActivity extends AppCompatActivity implements NavigationVie
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private DatabaseReference userref;
     private DatabaseReference orderref;
-    private OrderItemsAdapter adapter;
+    private OrderItemsAdapterCustomer adapter;
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -230,14 +234,25 @@ public class MyOrdersActivity extends AppCompatActivity implements NavigationVie
         FirebaseRecyclerOptions<OrderItem> options = new FirebaseRecyclerOptions.Builder<OrderItem>()
                 .setQuery(orderref.orderByChild("Customer_UID").equalTo(firebaseAuth.getCurrentUser().getUid()),OrderItem.class)
                 .build();
-        adapter = new OrderItemsAdapter(options);
+
+        adapter = new OrderItemsAdapterCustomer(options);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new OrderItemsAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OrderItemsAdapterCustomer.OnItemClickListener() {
             @Override
-            public void onItemClick(String latitude, String longitude, String phone, String cust_uid, String status,String amount)
+            public void onItemClick(final String orderid)
             {
-                Toast.makeText(MyOrdersActivity.this, "Button Clicked", Toast.LENGTH_SHORT).show();
+                final RatingDialog ratingDialog = new RatingDialog.Builder(MyOrdersActivity.this)
+                        .threshold(6)
+                        .formHint("Tell Us More!")
+                        .onRatingBarFormSumbit(new RatingDialog.Builder.RatingDialogFormListener() {
+                            @Override
+                            public void onFormSubmitted(String feedback) {
+                                orderref.child(orderid).child("Feedback").setValue(feedback);
+                                Toast.makeText(MyOrdersActivity.this, "Feedback Recieved", Toast.LENGTH_SHORT).show();
+                            }
+                        }).build();
+                ratingDialog.show();
             }
         });
 
