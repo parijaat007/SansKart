@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -47,7 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private DatabaseReference fromReference;
     private DatabaseReference toReference;
     private String PhoneNumber;
-    public String customername = "";
+    private String custname;
     private String uid;
     private String cartTotalAmt;
     private Button SendButton;
@@ -60,6 +61,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         PhoneNumber = getIntent().getStringExtra("PhoneNumber");
         uid = getIntent().getStringExtra("UID");
+
+        DatabaseReference custref = FirebaseDatabase.getInstance().getReference("user").child(uid);
+
+        custref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                custname = snapshot.child("fullName").getValue().toString();
+                Log.d("MSG", custname);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         cartTotalAmt = getIntent().getStringExtra("cartTotal");
 
         //Toast.makeText(MapsActivity.this,"Cart Total"+cartTotalAmt,Toast.LENGTH_SHORT).show();
@@ -156,30 +172,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final HashMap<String,Object> order = new HashMap<>();
         final String orderid = UUID.randomUUID().toString();
 
-//        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();;
-//        DatabaseReference userref = FirebaseDatabase.getInstance().getReference("user").child();
-//        userref.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                user current_user = snapshot.getValue(user.class);
-//                customername = current_user.fullName;
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
         order.put("CartTotalAmount",cartTotalAmt);
         order.put("Customer_UID",uid);
-        order.put("Customer_name",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         order.put("Phone_Number",PhoneNumber);
         order.put("Latitude",String.valueOf(lat));
         order.put("Longitude",String.valueOf(longt));
         order.put("Status","0");
         order.put("Distance","NA");
         order.put("OrderID", orderid);
+        Log.d("MSG", ">>" + custname);
+        order.put("Customer_name",String.valueOf(custname));
 
         OrderNode.child(orderid).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
