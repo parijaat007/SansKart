@@ -50,9 +50,9 @@ public class LoginActivity extends AppCompatActivity {
 
         txtemail = (EditText) findViewById(R.id.EmailLoginEditText);
         txtpassword = (EditText) findViewById(R.id.PasswordLoginEditText);
-        btn_login = (Button) findViewById(R.id.LoginButton);
-        GoogleSignInButton = (ImageButton) findViewById(R.id.GoogleSignInButton);
-        PhoneSignInButton = (ImageButton) findViewById(R.id.PhoneSignInButton);
+        btn_login = findViewById(R.id.LoginButton);
+        GoogleSignInButton = findViewById(R.id.GoogleSignInButton);
+        PhoneSignInButton = findViewById(R.id.PhoneSignInButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
